@@ -1,7 +1,7 @@
 {
-  "name": "fs-app-template",
+  "name": "ChromeChat",
   "version": "2.0.0",
-  "description": "Some boilerplate code to get you started - get shakin'!",
+  "description": "Starter code for ChromeChat",
   "main": "index.js",
   "scripts": {
     "build": "webpack",
@@ -28,7 +28,8 @@
     "jsonwebtoken": "^8.5.1",
     "morgan": "^1.9.1",
     "pg": "^8.5.1",
-    "sequelize": "^6.3.5"
+    "sequelize": "^6.3.5",
+    "socket.io": "^4.1.2"
   },
   "devDependencies": {
     "@babel/core": "^7.12.10",
