@@ -1,11 +1,7 @@
 import React, { useState, useEffect } from "react";
-/**
- * COMPONENT
- */
+
 const Chat = () => {
   var socket = io();
-
-  const [chatMessages, setMessages] = useState([]);
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -13,15 +9,39 @@ const Chat = () => {
     if (msg) {
       socket.emit("chat message", msg);
       e.target.input.value = "";
-      //send msg to firebase chat topic
+      firebase
+        .database()
+        .ref("sequelize")
+        .child("lobby") //will eventually be dynamic (topic)
+        .push()
+        .set({ message: msg, time: Date.now(), sender: "randomUser" }); //will eventually be dynamic (name)
     }
   }
 
   //on first load, or refresh
   //loop through messages state and display all messages
-  useEffect(() => {
-    console.log("fetch all messages with firebase and display");
-  }, []);
+  /*   useEffect(() => {
+    firebase
+      .database()
+      .ref("sequelize")
+      .child("lobby")
+      .limitToLast(3)
+      .get()
+      .then((snapshot) => {
+        if (snapshot.exists()) {
+          let data = snapshot.val();
+          for (const key in data) {
+            var messages = document.getElementById("messages");
+            var item = document.createElement("li");
+            item.textContent = new Date(data[key].time); //message
+            messages.appendChild(item);
+            window.scrollTo(0, document.body.scrollHeight);
+          }
+        } else {
+          console.log("No data available");
+        }
+      });
+  }, []); */
 
   //get url topic
   //url topic will be used inside .on('url topic')
