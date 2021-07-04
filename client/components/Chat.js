@@ -1,20 +1,31 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
+import history from "../history";
+let room = null;
 
 const Chat = () => {
   var socket = io();
+
+  useEffect(() => {
+    const { pathname } = history.location;
+    let splitPathName = pathname.split("+");
+    const userName = splitPathName[0].substring(1);
+    room = splitPathName[1].split("-").join(" ");
+    socket.emit("join", room);
+  }, []);
 
   function handleSubmit(e) {
     e.preventDefault();
     let msg = e.target.input.value;
     if (msg) {
-      socket.emit("chat message", msg);
+      //socket.emit("chat message", msg);
+      socket.emit("chat message", { msg, room });
       e.target.input.value = "";
-      firebase
+      /*   firebase
         .database()
         .ref("sequelize")
         .child("lobby") //will eventually be dynamic (topic)
         .push()
-        .set({ message: msg, time: Date.now(), sender: "randomUser" }); //will eventually be dynamic (name)
+        .set({ message: msg, time: Date.now(), sender: "randomUser" });  */ //will eventually be dynamic (name)
     }
   }
 
@@ -33,7 +44,7 @@ const Chat = () => {
           for (const key in data) {
             var messages = document.getElementById("messages");
             var item = document.createElement("li");
-            item.textContent = new Date(data[key].time); //message
+            item.textContent = data[key].message; //new Date(data[key].time);
             messages.appendChild(item);
             window.scrollTo(0, document.body.scrollHeight);
           }

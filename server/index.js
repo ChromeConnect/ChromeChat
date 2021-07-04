@@ -7,20 +7,31 @@ const server = http.createServer(app);
 const { Server } = require("socket.io");
 const io = new Server(server);
 
-app.get("/", (req, res) =>
-  res.sendFile(path.join(__dirname, "..", "public/index.html"))
-);
+app.get("/", (req, res) => {
+  console.log(req.headers);
+  return res.sendFile(path.join(__dirname, "..", "public/index.html"));
+});
 
 io.on("connection", (socket) => {
-  console.log("a user connected");
+  /*   console.log("a user connected");
   socket.on("disconnect", () => {
     console.log("user disconnected");
+  }); */
+
+  socket.on("join", (room) => {
+    console.log(`Socket ${socket.id} joining ${room}`);
+    socket.join(room);
   });
 });
 
 io.on("connection", (socket) => {
-  socket.on("chat message", (msg) => {
+  /*   socket.on("chat message", (msg) => {
     io.emit("chat message", msg);
+  }); */
+
+  socket.on("chat message", (data) => {
+    const { msg, room } = data;
+    io.to(room).emit("chat message", msg);
   });
 });
 
