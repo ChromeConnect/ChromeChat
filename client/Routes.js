@@ -7,7 +7,7 @@ class Routes extends Component {
     return (
       <div>
         <Switch>
-          <Route path="/" exact component={Chat} />
+          <Route path="/:nameplustopic" exact component={Chat} />
         </Switch>
       </div>
     );
