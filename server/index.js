@@ -13,11 +13,6 @@ app.get("/", (req, res) => {
 });
 
 io.on("connection", (socket) => {
-  /*   console.log("a user connected");
-  socket.on("disconnect", () => {
-    console.log("user disconnected");
-  }); */
-
   socket.on("join", (room) => {
     console.log(`Socket ${socket.id} joining ${room}`);
     socket.join(room);
@@ -25,10 +20,6 @@ io.on("connection", (socket) => {
 });
 
 io.on("connection", (socket) => {
-  /*   socket.on("chat message", (msg) => {
-    io.emit("chat message", msg);
-  }); */
-
   socket.on("chat message", (data) => {
     const { msg, room } = data;
     io.to(room).emit("chat message", msg);
@@ -41,17 +32,8 @@ app.use("*", (req, res) => {
   res.sendFile(path.join(__dirname, "..", "public/index.html"));
 });
 
-//const seed = require('../script/seed');
-
 const init = async () => {
   try {
-    /*     if(process.env.SEED === 'true'){
-      await seed();
-    }
-    else {
-      await db.sync()
-    } */
-    // start listening (and create a 'server' object representing our server)
     server.listen(PORT, () => console.log(`Mixing it up on port ${PORT}`));
   } catch (ex) {
     console.log(ex);

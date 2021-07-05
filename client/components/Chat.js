@@ -17,7 +17,6 @@ const Chat = () => {
     e.preventDefault();
     let msg = e.target.input.value;
     if (msg) {
-      //socket.emit("chat message", msg);
       socket.emit("chat message", { msg, room });
       e.target.input.value = "";
       /*   firebase
@@ -54,8 +53,6 @@ const Chat = () => {
       });
   }, []); */
 
-  //get url topic
-  //url topic will be used inside .on('url topic')
   socket.on("chat message", function (msg) {
     var messages = document.getElementById("messages");
     var item = document.createElement("li");
