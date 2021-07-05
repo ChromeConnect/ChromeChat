@@ -1,4 +1,9 @@
 import React, { useState, useEffect } from "react"
+const Filter = require("bad-words")
+
+const filter = new Filter()
+filter.addWords("Flatiron", "General", "Assembly")
+
 /**
  * COMPONENT
  */
@@ -9,7 +14,7 @@ const Chat = () => {
 
 	function handleSubmit(e) {
 		e.preventDefault()
-		let msg = e.target.input.value
+		let msg = filter.clean(e.target.input.value)
 		if (msg) {
 			socket.emit("chat message", msg)
 			e.target.input.value = ""
