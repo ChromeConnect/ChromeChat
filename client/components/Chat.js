@@ -36,7 +36,7 @@ const Chat = () => {
 	return (
 		<div>
 			<div class="header" id="myHeader">
-				<h2>Topic</h2>
+				<h2>Lobby</h2>
 			</div>
 			<div id="messages"></div>
 			<form id="form" onSubmit={handleSubmit}>
