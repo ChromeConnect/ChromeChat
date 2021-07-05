@@ -32,7 +32,7 @@ const Chat = () => {
 	//url topic will be used inside .on('url topic')
 	socket.on("chat message", function (msg) {
 		var messages = document.getElementById("messages")
-		var item = document.createElement("li")
+		var item = document.createElement("p")
 		item.textContent = msg
 		messages.appendChild(item)
 		window.scrollTo(0, document.body.scrollHeight)
@@ -40,7 +40,10 @@ const Chat = () => {
 
 	return (
 		<div>
-			<ul id="messages"></ul>
+			<div class="header" id="myHeader">
+				<h2>Lobby</h2>
+			</div>
+			<div id="messages"></div>
 			<form id="form" onSubmit={handleSubmit}>
 				<input id="input" autoComplete="off" />
 				<button type="submit">Send</button>
