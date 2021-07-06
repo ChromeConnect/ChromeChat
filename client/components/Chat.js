@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react"
+import RichTextEditor from "./RichTextEditor"
 const Filter = require("bad-words")
 
 const filter = new Filter()
@@ -40,14 +41,15 @@ const Chat = () => {
 
 	return (
 		<div>
-			<div class="header" id="myHeader">
+			<div className="header" id="myHeader">
 				<h2>Lobby</h2>
 			</div>
 			<div id="messages"></div>
-			<form id="form" onSubmit={handleSubmit}>
+			{/* <form id="form" onSubmit={handleSubmit}>
 				<input id="input" autoComplete="off" />
 				<button type="submit">Send</button>
-			</form>
+			</form> */}
+			<RichTextEditor />
 		</div>
 	)
 }
