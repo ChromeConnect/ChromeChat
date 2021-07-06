@@ -1,5 +1,9 @@
 import React, { useState, useEffect } from "react";
 import history from "../history";
+import { Editor, EditorState, RichUtils } from "draft-js";
+import { convertToHTML } from 'draft-convert'
+import "draft-js/dist/Draft.css";
+
 const Filter = require("bad-words");
 let room = null;
 let userName = null;
@@ -9,16 +13,30 @@ filter.addWords("Flatiron", "General", "Assembly");
 const Chat = () => {
   var socket = io();
 
-  const [chatMessages, setMessages] = useState([]);
+	const [editorState, setEditorState] = useState(() =>
+    EditorState.createEmpty()
+  );
 
   function handleSubmit(e) {
     e.preventDefault();
-    let msg = filter.clean(e.target.input.value);
+    //let msg = filter.clean(e.target.input.value);
+		let msg = convertToHTML(editorState.getCurrentContent())
     if (msg) {
       socket.emit("chat message", { msg, room });
       e.target.input.value = "";
+			setEditorState(EditorState.createEmpty())
     }
   }
+
+	const handleKeyCommand = (command, editorState) => {
+    const newState = RichUtils.handleKeyCommand(editorState, command);
+
+    if (newState) {
+      setEditorState(newState);
+      return "handled";
+    }
+    return "not handled";
+  };
 
   useEffect(() => {
     const { pathname } = history.location;
@@ -30,20 +48,25 @@ const Chat = () => {
 
   socket.on("chat message", function (msg) {
     var messages = document.getElementById("messages");
-    var item = document.createElement("p");
-    item.textContent = msg;
+    var item = document.createElement("div");
+		//const html = convertToHTML(msg)
+    item.innerHTML = msg;
     messages.appendChild(item);
     window.scrollTo(0, document.body.scrollHeight);
   });
 
   return (
     <div>
-      <div class="header" id="myHeader">
+      <div className="header" id="myHeader">
         <h2>Lobby</h2>
       </div>
       <div id="messages"></div>
       <form id="form" onSubmit={handleSubmit}>
-        <input id="input" autoComplete="off" />
+				<Editor
+          editorState={editorState}
+          onChange={setEditorState}
+          handleKeyCommand={handleKeyCommand}
+        />
         <button type="submit">Send</button>
       </form>
     </div>
