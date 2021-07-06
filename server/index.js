@@ -19,8 +19,16 @@ io.on("connection", (socket) => {
 });
 
 io.on("connection", (socket) => {
-  socket.on("chat message", (msg) => {
-    io.emit("chat message", msg);
+  socket.on("join", (room) => {
+    console.log(`Socket ${socket.id} joining ${room}`);
+    socket.join(room);
+  });
+});
+
+io.on("connection", (socket) => {
+  socket.on("chat message", (data) => {
+    const { msg, room } = data;
+    io.to(room).emit("chat message", msg);
   });
 });
 
