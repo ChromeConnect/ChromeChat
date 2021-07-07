@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
 import history from "../history";
-import { Editor, EditorState, RichUtils } from "draft-js";
+import { Editor, EditorState, RichUtils, convertToRaw, convertFromRaw } from "draft-js";
 import { convertToHTML } from 'draft-convert'
 import "draft-js/dist/Draft.css";
+import createToolbarPlugin from '@draft-js-plugins/static-toolbar';
+
 
 const Filter = require("bad-words");
 let room = null;
@@ -17,37 +19,39 @@ const Chat = () => {
     EditorState.createEmpty()
   );
 
-  function handleSubmit(e) {
-    e.preventDefault();
-    //let msg = filter.clean(e.target.input.value);
-		let msg = convertToHTML(editorState.getCurrentContent())
-    if (msg) {
-      socket.emit("chat message", { msg, room });
-      e.target.input.value = "";
-			setEditorState(EditorState.createEmpty())
-    }
-  }
+	const toolbarPlugin = createToolbarPlugin()
+	const { Toolbar } = toolbarPlugin
 
 	const handleKeyCommand = (command, editorState) => {
-    const newState = RichUtils.handleKeyCommand(editorState, command);
+		const newState = RichUtils.handleKeyCommand(editorState, command);
 
     if (newState) {
-      setEditorState(newState);
+			setEditorState(newState);
       return "handled";
     }
     return "not handled";
   };
 
   useEffect(() => {
-    const { pathname } = history.location;
+		const { pathname } = history.location;
     let splitPathName = pathname.split("+");
     userName = splitPathName[0].substring(1);
     room = splitPathName[1].split("-").join(" ");
     socket.emit("join", room);
   }, []);
 
+	function handleSubmit(e) {
+		e.preventDefault();
+		let msg = convertToHTML(editorState.getCurrentContent()) //sending raw html
+		msg = filter.clean(msg) //apply filter on html
+		if (msg) {
+			socket.emit("chat message", { msg, room });
+			setEditorState(EditorState.createEmpty())
+		}
+	}
+
   socket.on("chat message", function (msg) {
-    var messages = document.getElementById("messages");
+		var messages = document.getElementById("messages");
     var item = document.createElement("div");
 		//const html = convertToHTML(msg)
     item.innerHTML = msg;
@@ -62,10 +66,12 @@ const Chat = () => {
       </div>
       <div id="messages"></div>
       <form id="form" onSubmit={handleSubmit}>
+				<Toolbar />
 				<Editor
           editorState={editorState}
           onChange={setEditorState}
           handleKeyCommand={handleKeyCommand}
+					plugins={[toolbarPlugin]}
         />
         <button type="submit">Send</button>
       </form>
