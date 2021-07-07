@@ -10,6 +10,7 @@ import {
 import { convertToHTML } from "draft-convert";
 import "draft-js/dist/Draft.css";
 import Toolbar from "./toolbar/Toolbar";
+import { styleMap } from "./toolbar/styles";
 
 const Filter = require("bad-words");
 let room = null;
@@ -44,21 +45,32 @@ const Chat = () => {
 
   function handleSubmit(e) {
     e.preventDefault();
+    const content = editorState.getCurrentContent();
     let msg = convertToHTML(editorState.getCurrentContent()); //sending raw html
     msg = filter.clean(msg); //apply filter on html
-    if (msg) {
+    if (content.hasText()) {
       socket.emit("chat message", { msg, room });
       setEditorState(EditorState.createEmpty());
     }
   }
 
   socket.on("chat message", function (msg) {
+    console.log(msg);
     var messages = document.getElementById("messages");
     var item = document.createElement("div");
     //const html = convertToHTML(msg)
     item.innerHTML = msg;
+    messages.appendChild(item);
     window.scrollTo(0, document.body.scrollHeight);
   });
+
+  function handleReturn(event) {
+    if (event) {
+      setEditorState(RichUtils.insertSoftNewline(editorState));
+      return "handled";
+    }
+    return "not-handled";
+  }
 
   return (
     <div>
@@ -72,6 +84,8 @@ const Chat = () => {
           editorState={editorState}
           onChange={setEditorState}
           handleKeyCommand={handleKeyCommand}
+          customStyleMap={styleMap}
+          handleReturn={handleReturn}
         />
         <button type="submit">Send</button>
       </form>
