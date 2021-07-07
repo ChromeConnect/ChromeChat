@@ -1,0 +1,19 @@
+div.DraftEditor-root {
+  width: 200px;
+	background-color: #fff;
+	position: relative;
+	word-wrap: break-word;
+	border-radius: 15px;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	margin-left: 10px;
+	margin-right: 10px;
+	padding: 0.5rem 1rem;
+	flex-basis: 75%;
+	height: 50%;
+  overflow-y: auto;
+}
+
+div.DraftEditor-editorContainer, div.public-DraftEditor-content {
+  height: 100%
+}

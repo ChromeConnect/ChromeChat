@@ -57,7 +57,6 @@ const Chat = () => {
     var item = document.createElement("div");
     //const html = convertToHTML(msg)
     item.innerHTML = msg;
-    messages.appendChild(item);
     window.scrollTo(0, document.body.scrollHeight);
   });
 
