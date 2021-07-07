@@ -1,9 +1,15 @@
+<<<<<<< HEAD
 import React, { useState, useEffect } from "react";
 import history from "../history";
 import { Editor, EditorState, RichUtils, convertToRaw, convertFromRaw } from "draft-js";
 import { convertToHTML } from 'draft-convert'
 import "draft-js/dist/Draft.css";
 import createToolbarPlugin from '@draft-js-plugins/static-toolbar';
+=======
+import React, { useState, useEffect } from "react"
+import RichTextEditor from "./RichTextEditor"
+const Filter = require("bad-words")
+>>>>>>> 70937e42de9e0fe9cb44e90b4c6a3698af51b8e4
 
 
 const Filter = require("bad-words");
@@ -50,6 +56,7 @@ const Chat = () => {
 		}
 	}
 
+<<<<<<< HEAD
   socket.on("chat message", function (msg) {
 		var messages = document.getElementById("messages");
     var item = document.createElement("div");
@@ -80,3 +87,37 @@ const Chat = () => {
 };
 
 export default Chat;
+=======
+	//on first load, or refresh
+	//loop through messages state and display all messages
+	useEffect(() => {
+		console.log("fetch all messages with firebase and display")
+	}, [])
+
+	//get url topic
+	//url topic will be used inside .on('url topic')
+	socket.on("chat message", function (msg) {
+		var messages = document.getElementById("messages")
+		var item = document.createElement("p")
+		item.textContent = msg
+		messages.appendChild(item)
+		window.scrollTo(0, document.body.scrollHeight)
+	})
+
+	return (
+		<div>
+			<div className="header" id="myHeader">
+				<h2>Lobby</h2>
+			</div>
+			<div id="messages"></div>
+			{/* <form id="form" onSubmit={handleSubmit}>
+				<input id="input" autoComplete="off" />
+				<button type="submit">Send</button>
+			</form> */}
+			<RichTextEditor />
+		</div>
+	)
+}
+
+export default Chat
+>>>>>>> 70937e42de9e0fe9cb44e90b4c6a3698af51b8e4
