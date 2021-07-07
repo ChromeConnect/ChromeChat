@@ -23,7 +23,7 @@ form div {
 /* Chat styling below */
 
 body {
-	max-width: 600px;
+	max-width: 70%;
 	margin: 0 auto 1rem;
 	padding-bottom: 3rem;
 	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
@@ -31,7 +31,7 @@ body {
 }
 
 #form {
-	max-width: 600px;
+	max-width: 70%;
 	margin: 0 auto 1rem;
 	background: rgba(0, 0, 0, 0.15);
 	padding: 0.25rem;
@@ -71,29 +71,27 @@ body {
 	padding: 0;
 }
 #messages > p {
+	background: #248bf5;
 	color: #fff;
-	position: relative;
+	/* position: relative; */
+	align-items: flex-start;
 	word-wrap: break-word;
-	border-radius: 15px;
+	width: fit-content;
+	max-width: 75%;
+	text-align: left;
+	border-radius: 25px;
 	margin-top: 10px;
 	margin-bottom: 0;
 	margin-left: 10px;
-	margin-right: 10px;
 	padding: 0.5rem 1rem;
 }
-#messages > p:nth-child(odd) {
-	margin-right: 50%;
-	text-align: left;
-	border-radius: 15px;
-	color: #fff;
-	background: #248bf5;
-}
 
-#messages > p:nth-child(even) {
-	margin-left: 50%;
-	text-align: right;
-	border-radius: 15px;
-	background: rgb(82, 77, 77);
+#messages h5 {
+	margin-top: 2px;
+	margin-left: 15px;
+	margin-bottom: 5px;
+	color: darkgrey;
+	text-align: left;
 }
 
 .header {
