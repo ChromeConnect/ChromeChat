@@ -46,7 +46,7 @@ const Chat = () => {
   function handleSubmit(e) {
     e.preventDefault();
     const content = editorState.getCurrentContent();
-		let msg = convertToRaw(content)
+    let msg = convertToRaw(content);
     if (content.hasText()) {
       socket.emit("chat message", { msg, room });
       setEditorState(EditorState.createEmpty());
@@ -57,10 +57,10 @@ const Chat = () => {
     var messages = document.getElementById("messages");
     var item = document.createElement("div");
 
-		const msgFromRaw = convertFromRaw(msg)
+    const msgFromRaw = convertFromRaw(msg);
 
-    let html = convertToHTML(msgFromRaw)
-		html = filter.clean(html)
+    let html = convertToHTML(msgFromRaw);
+    html = filter.clean(html);
 
     item.innerHTML = html;
     messages.appendChild(item);
@@ -69,7 +69,7 @@ const Chat = () => {
   });
 
   function handleReturn(event) {
-    if (event) {
+    if (event.shiftKey) {
       setEditorState(RichUtils.insertSoftNewline(editorState));
       return "handled";
     }
