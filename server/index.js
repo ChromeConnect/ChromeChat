@@ -30,6 +30,14 @@ io.on("connection", (socket) => {
     const { payload, room } = data;
     io.to(room).emit("chat message", payload);
   });
+  socket.on("draw", (data) => {
+    const { payload, room } = data;
+    io.to(room).emit("draw", payload);
+  });
+  socket.on("down", (data) => {
+    const { payload, room } = data;
+    io.to(room).emit("draw", payload);
+  });
 });
 
 app.use(express.static(path.join(__dirname, "..", "public")));
