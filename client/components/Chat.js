@@ -46,8 +46,7 @@ const Chat = () => {
   function handleSubmit(e) {
     e.preventDefault();
     const content = editorState.getCurrentContent();
-    let msg = convertToHTML(editorState.getCurrentContent()); //sending raw html
-    msg = filter.clean(msg); //apply filter on html
+		let msg = convertToRaw(content)
     if (content.hasText()) {
       socket.emit("chat message", { msg, room });
       setEditorState(EditorState.createEmpty());
@@ -55,12 +54,17 @@ const Chat = () => {
   }
 
   socket.on("chat message", function (msg) {
-    console.log(msg);
     var messages = document.getElementById("messages");
     var item = document.createElement("div");
-    //const html = convertToHTML(msg)
-    item.innerHTML = msg;
+
+		const msgFromRaw = convertFromRaw(msg)
+
+    let html = convertToHTML(msgFromRaw)
+		html = filter.clean(html)
+
+    item.innerHTML = html;
     messages.appendChild(item);
+
     window.scrollTo(0, document.body.scrollHeight);
   });
 
