@@ -20,17 +20,26 @@
 	"author": "Fullstack Academy of Code",
 	"license": "MIT",
 	"dependencies": {
+		"@draft-js-plugins/static-toolbar": "^4.1.1",
+		"@fortawesome/fontawesome-free": "^5.15.3",
+		"@fortawesome/free-solid-svg-icons": "^5.15.3",
+		"@fortawesome/react-fontawesome": "^0.1.14",
 		"axios": "^0.21.1",
 		"bad-words": "^3.0.4",
 		"bcrypt": "^5.0.0",
 		"compression": "^1.7.3",
+		"css-loader": "^5.2.6",
+		"draft-convert": "^2.1.11",
+		"draft-js": "^0.11.7",
 		"express": "^4.16.4",
 		"history": "^4.9.0",
 		"jsonwebtoken": "^8.5.1",
 		"morgan": "^1.9.1",
 		"pg": "^8.5.1",
 		"sequelize": "^6.3.5",
-		"socket.io": "^4.1.2"
+		"socket.io": "^4.1.2",
+		"style-loader": "^3.0.0",
+		"styled-components": "^5.3.0"
 	},
 	"devDependencies": {
 		"@babel/core": "^7.12.10",
@@ -40,6 +49,7 @@
 		"axios-mock-adapter": "^1.16.0",
 		"babel-loader": "^8.2.2",
 		"chai": "^4.2.0",
+		"css-loader": "^5.2.6",
 		"enzyme": "^3.9.0",
 		"enzyme-adapter-react-16": "^1.12.1",
 		"esm": "^3.2.25",
@@ -55,6 +65,7 @@
 		"redux-logger": "^3.0.6",
 		"redux-mock-store": "^1.5.3",
 		"redux-thunk": "^2.3.0",
+		"style-loader": "^3.0.0",
 		"supertest": "^4.0.2",
 		"webpack": "^5.15.0",
 		"webpack-cli": "^4.3.1"
