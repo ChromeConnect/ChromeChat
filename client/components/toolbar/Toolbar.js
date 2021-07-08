@@ -1,11 +1,9 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { RichUtils } from "draft-js";
 import { inlineStyles, blockStyles } from "./styles";
 
 const Toolbar = (props) => {
   const { editorState, setEditorState } = props;
-
-  useEffect(() => {});
 
   const handleInlineStyle = (event, style) => {
     event.preventDefault();
@@ -21,7 +19,6 @@ const Toolbar = (props) => {
     const currentInlineStyle = editorState.getCurrentInlineStyle();
     let className = "toolbar-button";
     if (currentInlineStyle.has(style.type)) {
-      console.log("i hab");
       className = "toolbar-button-selected";
     }
 
