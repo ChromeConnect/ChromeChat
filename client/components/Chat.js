@@ -111,7 +111,6 @@ const Chat = () => {
             //add messsages below here
             var item = document.createElement("div");
             var sender = document.createElement("h5");
-            console.log(payload.msg)
             let parsedMessage = JSON.parse(payload.msg);
             const msgFromRaw = convertFromRaw(parsedMessage);
             let html = convertToHTML(msgFromRaw);
@@ -147,7 +146,6 @@ const Chat = () => {
     var sender = document.createElement("h5");
     let parsedMessage = JSON.parse(payload.msg);
     let html = draftToHtml(parsedMessage);
-    console.log(html);
     html = filter.clean(html);
     item.innerHTML = html;
     sender.textContent = `-${
