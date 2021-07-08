@@ -70,15 +70,20 @@ const Chat = () => {
   function handleSubmit(e) {
     e.preventDefault();
     const content = editorState.getCurrentContent();
-		const rawObj = convertToRaw(content)
     let payload = {
-      msg: JSON.stringify(rawObj),
+      msg: convertToRaw(content),
       userName,
       timestamp: new Date().toLocaleTimeString(),
     };
     if (content.hasText()) {
       socket.emit("chat message", { payload, room });
       setEditorState(getResetEditorState(editorState));
+			//firebase
+        // firebase.database()
+        // .ref("testing")
+        // .child("richText") //will eventually be dynamic (topic)
+        // .push()
+        // .set({ message: rawObj, time: Date.now(), sender: "randomUser" });
     }
   }
 
@@ -97,8 +102,7 @@ const Chat = () => {
     var messages = document.getElementById("messages");
     var item = document.createElement("div");
     var sender = document.createElement("h5");
-		const rawObj = JSON.parse(payload.msg)
-    const msgFromRaw = convertFromRaw(rawObj);
+    const msgFromRaw = convertFromRaw(payload.msg);
     let html = convertToHTML(msgFromRaw);
     html = filter.clean(html);
     item.innerHTML = html;
