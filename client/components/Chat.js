@@ -70,15 +70,60 @@ const Chat = () => {
   function handleSubmit(e) {
     e.preventDefault();
     const content = editorState.getCurrentContent();
+    let rawMessage = convertToRaw(content);
+    let stringMessage = JSON.stringify(rawMessage);
     let payload = {
-      msg: convertToRaw(content),
+      msg: stringMessage,
       userName,
       timestamp: new Date().toLocaleTimeString(),
     };
     if (content.hasText()) {
       socket.emit("chat message", { payload, room });
       setEditorState(getResetEditorState(editorState));
+      firebase
+        .database()
+        .ref("sequelize")
+        .child(room)
+        .child("messages")
+        .push()
+        .set(payload);
     }
+  }
+
+  function loadLastHundredMessages() {
+    var messages = document.getElementById("messages");
+
+    firebase
+      .database()
+      .ref("sequelize")
+      .child(room)
+      .child("messages")
+      .limitToLast(100)
+      .get()
+      .then((snapshot) => {
+        if (snapshot.exists()) {
+          let data = snapshot.val();
+          for (const key in data) {
+            const payload = data[key];
+            //add messsages below here
+            var item = document.createElement("div");
+            var sender = document.createElement("h5");
+            let parsedMessage = JSON.parse(payload.msg);
+            const msgFromRaw = convertFromRaw(parsedMessage);
+            let html = convertToHTML(msgFromRaw);
+            html = filter.clean(html);
+            item.innerHTML = html;
+            sender.textContent = `-${
+              payload.userName[0].toUpperCase() + payload.userName.substring(1)
+            }(sent at ${payload.timestamp})`;
+            messages.appendChild(item);
+            messages.appendChild(sender);
+            window.scrollTo(0, document.body.scrollHeight);
+          }
+        } else {
+          console.log("No data available");
+        }
+      });
   }
 
   useEffect(() => {
@@ -89,14 +134,15 @@ const Chat = () => {
     const topic = document.getElementById("topic");
     topic.innerText = `${room[0].toUpperCase() + room.substring(1)}`;
     socket.emit("join", room);
-    console.log(room);
+    loadLastHundredMessages();
   }, []);
 
   socket.on("chat message", function (payload) {
     var messages = document.getElementById("messages");
     var item = document.createElement("div");
     var sender = document.createElement("h5");
-    const msgFromRaw = convertFromRaw(payload.msg);
+    let parsedMessage = JSON.parse(payload.msg);
+    const msgFromRaw = convertFromRaw(parsedMessage);
     let html = convertToHTML(msgFromRaw);
     html = filter.clean(html);
     item.innerHTML = html;
