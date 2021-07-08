@@ -1,54 +1,68 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { RichUtils } from "draft-js";
 import { inlineStyles, blockStyles } from "./styles";
 
 const Toolbar = (props) => {
   const { editorState, setEditorState } = props;
 
+  useEffect(() => {});
+
   const handleInlineStyle = (event, style) => {
     event.preventDefault();
     setEditorState(RichUtils.toggleInlineStyle(editorState, style));
-    if (event.currentTarget.className === "toolbar-button-selected")
-      event.currentTarget.className = "toolbar-button";
-    else {
-      event.currentTarget.className = "toolbar-button-selected";
-    }
   };
 
-  const handleBlockStyle = (event, style) => {
+  const handleBlockStyle = (event, block) => {
     event.preventDefault();
-    setEditorState(RichUtils.toggleBlockType(editorState, style));
-    if (event.currentTarget.className === "toolbar-button-selected")
-      event.currentTarget.className = "toolbar-button";
-    else {
-      event.currentTarget.className = "toolbar-button-selected";
+    setEditorState(RichUtils.toggleBlockType(editorState, block));
+  };
+
+  const renderInlineStyleButton = (style, index) => {
+    const currentInlineStyle = editorState.getCurrentInlineStyle();
+    let className = "toolbar-button";
+    if (currentInlineStyle.has(style.type)) {
+      console.log("i hab");
+      className = "toolbar-button-selected";
     }
+
+    return (
+      <button
+        key={index}
+        onMouseDown={(event) => handleInlineStyle(event, style.type)}
+        onClick={(event) => event.preventDefault()}
+        className={className}
+      >
+        <i className={style.iconClass}></i>
+      </button>
+    );
+  };
+
+  const renderBlockStyleButton = (block, index) => {
+    const currentBlockType = RichUtils.getCurrentBlockType(editorState);
+    let className = "toolbar-button";
+    if (currentBlockType === block.type) {
+      className = "toolbar-button-selected";
+    }
+
+    return (
+      <button
+        key={index}
+        onMouseDown={(event) => handleBlockStyle(event, block.type)}
+        onClick={(event) => event.preventDefault()}
+        className={className}
+      >
+        <i className={block.iconClass}></i>
+      </button>
+    );
   };
 
   return (
     <div id="editor-toolbar">
       {inlineStyles.map((style, index) => {
-        return (
-          <button
-            key={index}
-            onMouseDown={(event) => handleInlineStyle(event, style.type)}
-            onClick={(event) => event.preventDefault()}
-            className="toolbar-button"
-          >
-            <i className={style.iconClass}></i>
-          </button>
-        );
+        return renderInlineStyleButton(style, index);
       })}
-      {blockStyles.map((style, index) => {
-        return (
-          <button
-            key={index}
-            onMouseDown={(event) => handleBlockStyle(event, style.type)}
-            onClick={(event) => event.preventDefault()}
-          >
-            <i className={style.iconClass}></i>
-          </button>
-        );
+      {blockStyles.map((block, index) => {
+        return renderBlockStyleButton(block, index);
       })}
     </div>
   );
