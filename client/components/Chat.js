@@ -50,7 +50,7 @@ const getResetEditorState = (editorState) => {
 }
 
 const Chat = () => {
-  var socket = io();
+	var socket = io()
 
   const [editorState, setEditorState] = useState(() =>
     EditorState.createEmpty()
@@ -66,39 +66,46 @@ const Chat = () => {
     return "not handled";
   };
 
-  useEffect(() => {
-    const { pathname } = history.location;
-    let splitPathName = pathname.split("+");
-    userName = splitPathName[0].substring(1);
-    room = splitPathName[1].split("-").join(" ");
-    socket.emit("join", room);
-  }, []);
-
-  function handleSubmit(e) {
-    e.preventDefault();
+	function handleSubmit(e) {
+		e.preventDefault()
     const content = editorState.getCurrentContent();
-    let msg = convertToRaw(content);
-    if (content.hasText()) {
-      socket.emit("chat message", { msg, room });
-      //setEditorState(EditorState.push(editorState, ContentState.createFromText('')));
+		let payload = {
+			msg: convertToRaw(content),
+			userName,
+			timestamp: new Date().toLocaleTimeString(),
+		}
+		if (content.hasText()) {
+			socket.emit("chat message", { payload, room })
 			setEditorState(getResetEditorState(editorState))
-    }
-  }
+		}
+	}
 
-  socket.on("chat message", function (msg) {
-    var messages = document.getElementById("messages");
-    var item = document.createElement("div");
+	useEffect(() => {
+		const { pathname } = history.location
+		let splitPathName = pathname.split("+")
+		userName = splitPathName[0].substring(1)
+		room = splitPathName[1].split("-").join(" ")
+		const topic = document.getElementById("topic")
+		topic.innerText = `${room[0].toUpperCase() + room.substring(1)}`
+		socket.emit("join", room)
+		console.log(room)
+	}, [])
 
-    const msgFromRaw = convertFromRaw(msg);
-
+	socket.on("chat message", function (payload) {
+		var messages = document.getElementById("messages")
+		var item = document.createElement("div")
+		var sender = document.createElement("h5")
+    const msgFromRaw = convertFromRaw(payload.msg);
     let html = convertToHTML(msgFromRaw);
     html = filter.clean(html);
-
-    item.innerHTML = html;
-    messages.appendChild(item);
-
-    window.scrollTo(0, document.body.scrollHeight);
-  });
+		item.innerHTML = html
+		sender.textContent = `-${
+			payload.userName[0].toUpperCase() + payload.userName.substring(1)
+		}(sent at ${payload.timestamp})`
+		messages.appendChild(item)
+		messages.appendChild(sender)
+		window.scrollTo(0, document.body.scrollHeight)
+	})
 
   function handleReturn(event) {
     if (event.shiftKey) {
