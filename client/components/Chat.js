@@ -70,8 +70,9 @@ const Chat = () => {
   function handleSubmit(e) {
     e.preventDefault();
     const content = editorState.getCurrentContent();
+		const rawObj = convertToRaw(content)
     let payload = {
-      msg: convertToRaw(content),
+      msg: JSON.stringify(rawObj),
       userName,
       timestamp: new Date().toLocaleTimeString(),
     };
@@ -96,7 +97,8 @@ const Chat = () => {
     var messages = document.getElementById("messages");
     var item = document.createElement("div");
     var sender = document.createElement("h5");
-    const msgFromRaw = convertFromRaw(payload.msg);
+		const rawObj = JSON.parse(payload.msg)
+    const msgFromRaw = convertFromRaw(rawObj);
     let html = convertToHTML(msgFromRaw);
     html = filter.clean(html);
     item.innerHTML = html;
