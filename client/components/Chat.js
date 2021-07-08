@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"
+import React, { useEffect } from "react"
 import history from "../history"
 const Filter = require("bad-words")
 let room = null
@@ -8,8 +8,6 @@ filter.addWords("Flatiron", "General", "Assembly")
 
 const Chat = () => {
 	var socket = io()
-
-	const [chatMessages, setMessages] = useState([])
 
 	function handleSubmit(e) {
 		e.preventDefault()
@@ -29,7 +27,10 @@ const Chat = () => {
 		let splitPathName = pathname.split("+")
 		userName = splitPathName[0].substring(1)
 		room = splitPathName[1].split("-").join(" ")
+		const topic = document.getElementById("topic")
+		topic.innerText = `${room[0].toUpperCase() + room.substring(1)}`
 		socket.emit("join", room)
+		console.log(room)
 	}, [])
 
 	socket.on("chat message", function (payload) {
@@ -49,7 +50,7 @@ const Chat = () => {
 	return (
 		<div>
 			<div class="header" id="myHeader">
-				<h2>Lobby</h2>
+				<h2 id="topic"></h2>
 			</div>
 			<div id="messages"></div>
 			<form id="form" onSubmit={handleSubmit}>
