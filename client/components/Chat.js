@@ -6,6 +6,8 @@ import {
   RichUtils,
   convertToRaw,
   convertFromRaw,
+	ContentState,
+	Modifier
 } from "draft-js";
 import { convertToHTML } from "draft-convert";
 import "draft-js/dist/Draft.css";
@@ -17,6 +19,35 @@ let room = null;
 let userName = null;
 const filter = new Filter();
 filter.addWords("Flatiron", "General", "Assembly");
+
+const removeSelectedBlocksStyle = (editorState)  => {
+	const newContentState = RichUtils.tryToRemoveBlockStyle(editorState);
+	if (newContentState) {
+			return EditorState.push(editorState, newContentState, 'change-block-type');
+	}
+	return editorState;
+}
+
+const getResetEditorState = (editorState) => {
+	const blocks = editorState
+			.getCurrentContent()
+			.getBlockMap()
+			.toList();
+	const updatedSelection = editorState.getSelection().merge({
+			anchorKey: blocks.first().get('key'),
+			anchorOffset: 0,
+			focusKey: blocks.last().get('key'),
+			focusOffset: blocks.last().getLength(),
+	});
+	const newContentState = Modifier.removeRange(
+			editorState.getCurrentContent(),
+			updatedSelection,
+			'forward'
+	);
+
+	const newState = EditorState.push(editorState, newContentState, 'remove-range');
+	return removeSelectedBlocksStyle(newState)
+}
 
 const Chat = () => {
   var socket = io();
@@ -49,7 +80,8 @@ const Chat = () => {
     let msg = convertToRaw(content);
     if (content.hasText()) {
       socket.emit("chat message", { msg, room });
-      setEditorState(EditorState.createEmpty());
+      //setEditorState(EditorState.push(editorState, ContentState.createFromText('')));
+			setEditorState(getResetEditorState(editorState))
     }
   }
 

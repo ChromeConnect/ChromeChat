@@ -144,3 +144,7 @@ div.DraftEditor-root {
 div.DraftEditor-editorContainer, div.public-DraftEditor-content {
   height: 100%
 }
+
+.toolbar-button-selected {
+	background-color: lightgray;
+}

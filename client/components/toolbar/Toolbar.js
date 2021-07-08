@@ -8,11 +8,21 @@ const Toolbar = (props) => {
   const handleInlineStyle = (event, style) => {
     event.preventDefault();
     setEditorState(RichUtils.toggleInlineStyle(editorState, style));
+    if (event.currentTarget.className === "toolbar-button-selected")
+      event.currentTarget.className = "toolbar-button";
+    else {
+      event.currentTarget.className = "toolbar-button-selected";
+    }
   };
 
   const handleBlockStyle = (event, style) => {
     event.preventDefault();
     setEditorState(RichUtils.toggleBlockType(editorState, style));
+    if (event.currentTarget.className === "toolbar-button-selected")
+      event.currentTarget.className = "toolbar-button";
+    else {
+      event.currentTarget.className = "toolbar-button-selected";
+    }
   };
 
   return (
@@ -23,6 +33,7 @@ const Toolbar = (props) => {
             key={index}
             onMouseDown={(event) => handleInlineStyle(event, style.type)}
             onClick={(event) => event.preventDefault()}
+            className="toolbar-button"
           >
             <i className={style.iconClass}></i>
           </button>
