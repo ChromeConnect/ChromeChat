@@ -1,29 +1,29 @@
 /* Chat styling below */
 
 body {
-	max-width: 70%;
-	margin: 0 auto 1rem;
-	padding-bottom: 3rem;
-	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
-		Arial, sans-serif;
+  max-width: 70%;
+  margin: 0 auto 1rem;
+  padding-bottom: 3rem;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
+    Arial, sans-serif;
 }
 
 #form {
-	max-width: 70%;
-	margin: 0 auto 1rem;
-	background: rgba(0, 0, 0, 0.15);
-	padding: 0.25rem;
-	position: fixed;
-	bottom: 0;
-	left: 0;
-	right: 0;
-	display: flex;
-	box-sizing: border-box;
-	backdrop-filter: blur(10px);
-	flex-wrap: wrap;
-	justify-content: space-evenly;
-	align-items: flex-end;
-	height: 30%;
+  max-width: 70%;
+  margin: 0 auto 1rem;
+  background: rgba(0, 0, 0, 0.15);
+  padding: 0.25rem;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  box-sizing: border-box;
+  backdrop-filter: blur(10px);
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  align-items: flex-end;
+  height: 30%;
 }
 /* #input {
 	border: none;
@@ -36,102 +36,154 @@ body {
 	outline: none;
 } */
 #form > button {
-	background: rgb(33, 145, 33);
-	border: none;
-	padding: 0 1rem;
-	margin: 0.25rem;
-	border-radius: 10px;
-	outline: none;
-	color: #fff;
-	margin: 10px 10px 10px;
-	height: 1.5rem;
+  background: rgb(33, 145, 33);
+  border: none;
+  padding: 0 1rem;
+  margin: 0.25rem;
+  border-radius: 10px;
+  outline: none;
+  color: #fff;
+  margin: 10px 10px 10px;
+  height: 1.5rem;
 }
 
 #messages {
-	display: flex;
-	flex-direction: column;
-	margin: 0;
-	padding: 0;
-	overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+  overflow-y: auto;
 }
 
 #messages > div {
-	background: #248bf5;
-	color: #fff;
-	/* position: relative; */
-	align-items: flex-start;
-	word-wrap: break-word;
-	width: fit-content;
-	max-width: 93%;
-	text-align: left;
-	border-radius: 25px;
-	margin-top: 10px;
-	margin-bottom: 0;
-	margin-left: 10px;
-	padding: 0.5rem 1rem;
-	text-align: left;
-	background: #248bf5;
-	overflow-y: auto;
+  background: #248bf5;
+  color: #fff;
+  /* position: relative; */
+  align-items: flex-start;
+  word-wrap: break-word;
+  width: fit-content;
+  max-width: 93%;
+  text-align: left;
+  border-radius: 25px;
+  margin-top: 10px;
+  margin-bottom: 0;
+  margin-left: 10px;
+  padding: 0.5rem 1rem;
+  text-align: left;
+  background: #248bf5;
+  overflow-y: auto;
 }
 
 #messages h5 {
-	margin-top: 2px;
-	margin-left: 15px;
-	margin-bottom: 5px;
-	color: darkgrey;
-	text-align: left;
+  margin-top: 2px;
+  margin-left: 15px;
+  margin-bottom: 5px;
+  color: darkgrey;
+  text-align: left;
 }
 
 .header {
-	margin: auto;
-	width: inherit;
-	border-radius: 20px;
-	margin-top: 10px;
-	padding: 5px 5px;
-	background: #f4a261;
-	color: #fff;
-	text-align: center;
-	position: -webkit-sticky;
-	position: sticky;
-	top: 0;
-	z-index: 999;
+  margin: auto;
+  width: inherit;
+  border-radius: 20px;
+  margin-top: 10px;
+  padding: 5px 5px;
+  background: #f4a261;
+  color: #fff;
+  text-align: center;
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  z-index: 999;
 }
 
 #editor-toolbar {
-	flex-basis: 100%;
-	margin-left: 12px;
+  flex-basis: 100%;
+  margin-left: 12px;
 }
 
 div.DraftEditor-root {
-	background-color: #fff;
-	position: relative;
-	word-wrap: break-word;
-	border-radius: 15px;
-	margin-top: 6px;
-	margin-bottom: 10px;
-	margin-left: 10px;
-	margin-right: 10px;
-	padding: 0.5rem 1rem;
-	flex-basis: 77%;
-	height: 65%;
-	overflow-y: auto;
+  background-color: #fff;
+  position: relative;
+  word-wrap: break-word;
+  border-radius: 15px;
+  margin-top: 6px;
+  margin-bottom: 10px;
+  margin-left: 10px;
+  margin-right: 10px;
+  padding: 0.5rem 1rem;
+  flex-basis: 77%;
+  height: 65%;
+  overflow-y: auto;
 }
 
 div.DraftEditor-editorContainer,
 div.public-DraftEditor-content {
-	height: 100%;
+  height: 100%;
 }
 
 .toolbar-button-selected {
-	background-color: lightgray;
+  background-color: lightgray;
 }
 
 #canvas {
-	position: absolute;
-	width: 100%;
-	height: 100%;
-	left: 0;
-	top: 0;
-	bottom: 0;
-	right: 0;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  right: 0;
+}
+
+/* Whiteboard styling */
+#colorsPalette {
+  background-color: white;
+  border: 1px solid black;
+  height: 250px;
+  width: 50px;
+  left: 0;
+  margin-top: 10%;
+  position: absolute;
+  z-index: 100;
+}
+
+.colorOption {
+  height: 50px;
+  width: 50px;
+}
+
+#red {
+  background-color: red;
+}
+
+#green {
+  background-color: green;
+}
+
+#blue {
+  background-color: blue;
+}
+
+#black {
+  background-color: black;
+}
+
+#purple {
+  background-color: purple;
+}
+
+#optionsPalette {
+  background-color: white;
+  border: 1px solid black;
+  height: 30px;
+  width: 40%;
+  left: 0;
+  right: 0;
+  position: absolute;
+  z-index: 100;
+  margin: auto;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
 }
