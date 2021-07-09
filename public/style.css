@@ -13,7 +13,7 @@ body {
 }
 
 #form {
-	background: rgba(0, 0, 0, 0.15);
+	background: lightgray;
 	padding: 0.25rem;
 	position: fixed;
 	bottom: 0;
@@ -63,8 +63,8 @@ body {
 }
 
 #messages > div {
-	background: #248bf5;
-	color: #fff;
+	background: lightblue;
+	color: #4b494c;
 	position: relative;
 	align-items: flex-start;
 	word-wrap: break-word;
@@ -77,7 +77,6 @@ body {
 	margin-left: 10px;
 	padding: 0.25rem .5rem;
 	text-align: left;
-	background: #248bf5;
 }
 
 #messages h5 {
@@ -107,6 +106,9 @@ body {
 #editor-toolbar {
 	flex-basis: 100%;
 	margin-left: 12px
+}
+
+#editor-toolbar > button {
 }
 
 div.DraftEditor-root {
