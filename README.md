@@ -28,7 +28,7 @@ ChromeChat is a realtime chatting website that has the following features:
 - [Hernan Berisso](https://github.com/htothenan1)
 - [Will Christensen](https://github.com/EWIllC)
 - [Adam Weinberg](https://github.com/adamweinberg)
-- [Pablo Loepz](https://github.com/PabloLopez98)
+- [Pablo Lopez](https://github.com/PabloLopez98)
 
 ## Setup
 
