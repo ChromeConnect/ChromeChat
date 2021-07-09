@@ -121,7 +121,7 @@ const Chat = () => {
             }(sent at ${payload.timestamp})`;
             messages.appendChild(item);
             messages.appendChild(sender);
-            window.scrollTo(0, document.body.scrollHeight);
+            messages.scrollTo(0, messages.scrollHeight);
           }
         } else {
           console.log("No data available");
@@ -154,7 +154,7 @@ const Chat = () => {
     }(sent at ${payload.timestamp})`;
     messages.appendChild(item);
     messages.appendChild(sender);
-    window.scrollTo(0, document.body.scrollHeight);
+    messages.scrollTo(0, messages.scrollHeight);
   });
 
   function handleReturn(event) {
