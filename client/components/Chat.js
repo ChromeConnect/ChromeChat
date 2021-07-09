@@ -13,6 +13,7 @@ import { convertToHTML } from "draft-convert";
 import "draft-js/dist/Draft.css";
 import Toolbar from "./toolbar/Toolbar";
 import { styleMap } from "./toolbar/styles";
+import draftToHtml from "draftjs-to-html";
 
 const Filter = require("bad-words");
 let room = null;
@@ -69,6 +70,7 @@ const Chat = () => {
 
   function handleSubmit(e) {
     e.preventDefault();
+
     const content = editorState.getCurrentContent();
     let rawMessage = convertToRaw(content);
     let stringMessage = JSON.stringify(rawMessage);
@@ -77,6 +79,7 @@ const Chat = () => {
       userName,
       timestamp: new Date().toLocaleTimeString(),
     };
+
     if (content.hasText()) {
       socket.emit("chat message", { payload, room });
       setEditorState(getResetEditorState(editorState));
@@ -143,9 +146,9 @@ const Chat = () => {
     var item = document.createElement("div");
     var sender = document.createElement("h5");
     let parsedMessage = JSON.parse(payload.msg);
-    const msgFromRaw = convertFromRaw(parsedMessage);
-    let html = convertToHTML(msgFromRaw);
+    let html = draftToHtml(parsedMessage);
     html = filter.clean(html);
+    console.log(html)
     item.innerHTML = html;
     sender.textContent = `-${
       payload.userName[0].toUpperCase() + payload.userName.substring(1)
