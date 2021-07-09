@@ -4,8 +4,6 @@ export const inlineStyles = [
   { type: "UNDERLINE", iconClass: "fa fa-underline" },
   {type: 'STRIKETHROUGH', iconClass: 'fa fa-strikethrough'},
   { type: "CODE", iconClass: "fa fa-code" },
-  // { type: 'HIGHLIGHT', iconClass: 'fa fa-tint'}
-  // {type: 'LINK', iconClass: 'fa fa-link'}
 ];
 
 export const blockStyles = [
@@ -23,7 +21,4 @@ export const styleMap = {
   'STRIKETHROUGH': {
     textDecoration: 'line-through'
   },
-  'HIGHLIGHT': {
-    color: '#faed27'
-  }
 }
