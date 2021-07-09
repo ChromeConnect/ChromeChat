@@ -147,6 +147,7 @@ const Chat = () => {
     let parsedMessage = JSON.parse(payload.msg);
     let html = draftToHtml(parsedMessage);
     html = filter.clean(html);
+    console.log(html)
     item.innerHTML = html;
     sender.textContent = `-${
       payload.userName[0].toUpperCase() + payload.userName.substring(1)
