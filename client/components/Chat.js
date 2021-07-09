@@ -99,7 +99,7 @@ const Chat = () => {
     window.open(
       //"https://chromechat.herokuapp.com/",
       `http://localhost:8080/board/${splitRoom}`,
-      "popUpWindow",
+      splitRoom,
       "height=300,width=400,left=100,top=100,resizable=no,scrollbars=yes,toolbar=no,menubar=yes,location=no,directories=no, status=yes"
     );
   }

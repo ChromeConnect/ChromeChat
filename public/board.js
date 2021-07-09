@@ -1,16 +1,17 @@
-let room = "lobby"
-let canvas = null
-let ctx = null
-let mouseDown = null
-let x = null
-let y = null
-let colorOption = null
-let width = 290
-let height = 140
-var socket = io()
 
-canvas = document.getElementById("canvas")
-const colorsPalette = document.getElementById("colorsPalette")
+const room = window.location.pathname.split("/").pop().split("+").join(" ");
+document.title = room;
+let canvas = null;
+let ctx = null;
+let mouseDown = null;
+let x = null;
+let y = null;
+let colorOption = null;
+var socket = io();
+
+canvas = document.getElementById("canvas");
+const colorsPalette = document.getElementById("colorsPalette");
+
 colorsPalette.addEventListener("click", function (e) {
 	colorOption = e.target.id
 })
