@@ -131,6 +131,7 @@ const Chat = () => {
     let splitPathName = pathname.split("+");
     userName = splitPathName[0].substring(1);
     room = splitPathName[1].split("-").join(" ");
+    document.title = room;
     const topic = document.getElementById("topic");
     topic.innerText = `${room[0].toUpperCase() + room.substring(1)}`;
     socket.emit("join", room);
