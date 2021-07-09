@@ -1,4 +1,5 @@
-let room = "lobby";
+const room = window.location.pathname.split("/").pop().split("+").join(" ");
+document.title = room;
 let canvas = null;
 let ctx = null;
 let mouseDown = null;
@@ -6,7 +7,6 @@ let x = null;
 let y = null;
 let colorOption = null;
 var socket = io();
-console.log(socket);
 
 canvas = document.getElementById("canvas");
 const colorsPalette = document.getElementById("colorsPalette");
