@@ -135,8 +135,8 @@ const Chat = () => {
     userName = splitPathName[0].substring(1);
     room = splitPathName[1].split("-").join(" ");
     document.title = room;
-    const topic = document.getElementById("topic");
-    topic.innerText = `${room[0].toUpperCase() + room.substring(1)}`;
+    // const topic = document.getElementById("topic");
+    // topic.innerText = `${room[0].toUpperCase() + room.substring(1)}`;
     socket.emit("join", room);
     loadLastHundredMessages();
   }, []);
@@ -148,7 +148,6 @@ const Chat = () => {
     let parsedMessage = JSON.parse(payload.msg);
     let html = draftToHtml(parsedMessage);
     html = filter.clean(html);
-    console.log(html)
     item.innerHTML = html;
     sender.textContent = `-${
       payload.userName[0].toUpperCase() + payload.userName.substring(1)
@@ -168,9 +167,10 @@ const Chat = () => {
 
   return (
     <div>
-      <div className="header" id="myHeader">
+      <div id='chat-container'>
+      {/* <div className="header" id="myHeader">
         <h2 id="topic"></h2>
-      </div>
+      </div> */}
       <div id="messages"></div>
       <form id="form" onSubmit={handleSubmit}>
         <Toolbar editorState={editorState} setEditorState={setEditorState} />
@@ -183,6 +183,7 @@ const Chat = () => {
         />
         <button type="submit">Send</button>
       </form>
+      </div>
     </div>
   );
 };
