@@ -6,6 +6,7 @@ let x = null;
 let y = null;
 let colorOption = null;
 var socket = io();
+console.log(socket);
 
 canvas = document.getElementById("canvas");
 const colorsPalette = document.getElementById("colorsPalette");
@@ -29,9 +30,11 @@ socket.on("down", function ({ x, y }) {
 });
 
 window.onmousedown = (e) => {
+  ctx.beginPath();
   ctx.moveTo(x, y);
   socket.emit("down", { payload: { x, y, colorOption }, room });
   mouseDown = true;
+  ctx.closePath();
 };
 
 window.onmouseup = (e) => {
