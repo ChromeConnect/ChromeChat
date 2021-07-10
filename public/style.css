@@ -187,3 +187,20 @@ div.public-DraftEditor-content {
   justify-content: space-around;
   align-items: center;
 }
+
+#canvas {
+  background-color: white;
+}
+
+#circularcursor {
+  visibility: hidden;
+  background-color: white;
+  border: 1px solid black;
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  -moz-border-radius: 50%;
+  -webkit-border-radius: 50%;
+  position: absolute;
+  z-index: 50;
+}
