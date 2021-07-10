@@ -15,13 +15,17 @@ colorsPalette.addEventListener("click", function (e) {
   colorOption = e.target.id;
 });
 
-// const rectangle = document.getElementById("rectangleButton")
-// rectangle.addEventListener("click", function (e) {
-// 	console.log("reached rectangle")
-// 	ctx.beginPath()
-// 	ctx.rect(200, 200, 150, 100)
-// 	ctx.stroke()
-// })
+//adding text to canvas
+document.addEventListener("keydown", function (e) {
+  e.preventDefault();
+  if (e.code === "Enter") {
+    alert("send text to other clients");
+  } else {
+    ctx.font = "16px Arial";
+    ctx.fillText(e.key, x, y);
+    x += ctx.measureText(e.key).width;
+  }
+});
 
 // Make our in-memory canvas
 var inMemCanvas = document.createElement("canvas");
@@ -45,9 +49,9 @@ ctx = canvas.getContext("2d");
 mouseDown = false;
 socket.emit("join", room);
 
+//Erase entire white board
 const clear = document.getElementById("clearButton");
 clear.addEventListener("click", function (e) {
-  console.log("reached clear");
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 });
 
@@ -56,6 +60,7 @@ socket.on("draw", function ({ x, y, colorOption }) {
   ctx.stroke();
   ctx.strokeStyle = colorOption;
 });
+
 socket.on("down", function ({ x, y }) {
   ctx.beginPath();
   ctx.moveTo(x, y);
