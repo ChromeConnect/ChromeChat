@@ -23,8 +23,24 @@ colorsPalette.addEventListener("click", function (e) {
 // 	ctx.stroke()
 // })
 
+// Make our in-memory canvas
+var inMemCanvas = document.createElement("canvas");
+var inMemCtx = inMemCanvas.getContext("2d");
+
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
+window.onresize = function () {
+  //repaint everything
+  inMemCanvas.width = canvas.width;
+  inMemCanvas.height = canvas.height;
+  inMemCtx.drawImage(canvas, 0, 0);
+  //
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+  //
+  ctx.drawImage(inMemCanvas, 0, 0);
+};
+
 ctx = canvas.getContext("2d");
 mouseDown = false;
 socket.emit("join", room);
