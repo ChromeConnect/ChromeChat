@@ -169,6 +169,11 @@ const Chat = () => {
     window.scrollTo(0, document.body.scrollHeight);
   });
 
+  socket.on("userCount", function (userCount) {
+    let userCountText = document.getElementById("usercount");
+    userCountText.innerText = "Online Users: (" + userCount + ")";
+  });
+
   function handleReturn(event) {
     if (event.shiftKey) {
       setEditorState(RichUtils.insertSoftNewline(editorState));
@@ -181,6 +186,7 @@ const Chat = () => {
     <div>
       <div className="header" id="myHeader">
         <h2 id="topic"></h2>
+        <div id="usercount"></div>
         <button id="whiteboard" onClick={handleBoard}>
           Go to whiteboard
         </button>
