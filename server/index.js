@@ -42,6 +42,10 @@ io.on("connection", (socket) => {
     const { payload, room } = data;
     io.to(room).emit("down", payload);
   });
+  socket.on("text", (data) => {
+    const { payload, room } = data;
+    io.to(room).emit("text", payload);
+  });
 });
 
 app.use(express.static(path.join(__dirname, "..", "public")));
