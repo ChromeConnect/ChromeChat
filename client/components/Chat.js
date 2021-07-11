@@ -100,7 +100,7 @@ const Chat = () => {
       //"https://chromechat.herokuapp.com/",
       `http://localhost:8080/board/${splitRoom}`,
       splitRoom,
-      "height=300,width=400,left=100,top=100,resizable=no,scrollbars=yes,toolbar=no,menubar=yes,location=no,directories=no, status=yes"
+      "height=700,width=1000,left=100,top=100,resizable=no,scrollbars=yes,toolbar=no,menubar=yes,location=no,directories=no, status=yes"
     );
   }
 

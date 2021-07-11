@@ -1,3 +1,4 @@
+//get url and change tab title to url endpoint
 const room = window.location.pathname.split("/").pop().split("-").join(" ");
 console.log(room);
 document.title = room;
