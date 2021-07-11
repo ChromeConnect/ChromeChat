@@ -1,4 +1,5 @@
-const room = window.location.pathname.split("/").pop().split("+").join(" ");
+const room = window.location.pathname.split("/").pop().split("-").join(" ");
+console.log(room);
 document.title = room;
 let canvas = null;
 let ctx = null;
