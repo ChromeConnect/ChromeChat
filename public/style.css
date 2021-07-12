@@ -1,73 +1,71 @@
 /* Chat styling below */
 
 body {
-
-	max-width: 100%;
-	margin: 0 auto 1rem;
-	padding-bottom: 3rem;
-	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
-		Arial, sans-serif;
+  max-width: 100%;
+  margin: 0 auto 1rem;
+  padding-bottom: 3rem;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
+    Arial, sans-serif;
 }
 
 #chat-container {
-	display: flex
+  display: flex;
 }
 
 #form {
-
-	background: lightblue;
-	padding: 0.25rem;
-	position: fixed;
-	bottom: 0;
-	left: 0;
-	right: 0;
-	display: flex;
-	box-sizing: border-box;
-	backdrop-filter: blur(10px);
-	flex-wrap: wrap;
-	justify-content: space-evenly;
-	align-items: flex-end;
-	flex: 1;
-	height: 25vh
+  background: lightblue;
+  padding: 0.25rem;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  box-sizing: border-box;
+  backdrop-filter: blur(10px);
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  align-items: flex-end;
+  flex: 1;
+  height: 25vh;
 }
 
 #form > button {
-	background: #6A66A3;
-	border: none;
-	padding: 0 1rem;
-	margin: 0.25rem;
-	border-radius: 10px;
-	outline: none;
-	color: #fff;
-	margin: 10px 10px 10px;
-	height: 1.5rem
+  background: #6a66a3;
+  border: none;
+  padding: 0 1rem;
+  margin: 0.25rem;
+  border-radius: 10px;
+  outline: none;
+  color: #fff;
+  margin: 10px 10px 10px;
+  height: 1.5rem;
 }
 
 #messages {
-	display: flex;
-	flex-direction: column;
-	margin: 0;
-	padding: 0;
-	overflow-y: auto;
-	position: absolute;
-	flex: 1;
-	height: 75vh;
-	width: 100vw
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+  overflow-y: auto;
+  position: absolute;
+  flex: 1;
+  height: 75vh;
+  width: 100vw;
 }
 
 .message {
-	color: #4b494c;
-	position: relative;
-	align-items: flex-start;
-	word-wrap: break-word;
-	width: fit-content;
-	max-width: 93%;
-	text-align: left;
-	border-radius: 25px;
-	margin-left: 20px;
-	padding: 0.25rem .5rem;
-	text-align: left;
-	margin-bottom: 1rem;
+  color: #4b494c;
+  position: relative;
+  align-items: flex-start;
+  word-wrap: break-word;
+  width: fit-content;
+  max-width: 93%;
+  text-align: left;
+  border-radius: 25px;
+  margin-left: 20px;
+  padding: 0.25rem 0.5rem;
+  text-align: left;
+  margin-bottom: 1rem;
 }
 
 #messages h5 {
@@ -79,42 +77,42 @@ body {
 }
 
 .header {
-	margin: auto;
-	width: inherit;
-	border-radius: 20px;
-	margin-top: 10px;
-	padding: 5px 5px;
-	background: #f4a261;
-	color: #fff;
-	text-align: center;
-	position: -webkit-sticky;
-	position: sticky;
-	top: 0;
-	z-index: 999;
-	flex: 1
+  margin: auto;
+  width: inherit;
+  border-radius: 20px;
+  margin-top: 10px;
+  padding: 5px 5px;
+  background: #f4a261;
+  color: #fff;
+  text-align: center;
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  z-index: 999;
+  flex: 1;
 }
 
 #editor-toolbar {
-	display: flex;
-	flex-basis: 100%;
-	margin-left: 12px
+  display: flex;
+  flex-basis: 100%;
+  margin-left: 12px;
 }
 
 #editor-toolbar > button {
-	color: #4b494c;
-	border: none
+  color: #4b494c;
+  border: none;
 }
 
 div.DraftEditor-root {
-	background-color: #fff;
-	position: relative;
-	word-wrap: break-word;
-	border-radius: 15px;
-	margin-top: 6px;
-	margin-bottom: 10px;
-	margin-right: 10px;
-	padding: 0.5rem 1rem;
-	flex-basis: 77%;
+  background-color: #fff;
+  position: relative;
+  word-wrap: break-word;
+  border-radius: 15px;
+  margin-top: 6px;
+  margin-bottom: 10px;
+  margin-right: 10px;
+  padding: 0.5rem 1rem;
+  flex-basis: 77%;
   overflow-y: auto;
 }
 
@@ -124,7 +122,7 @@ div.public-DraftEditor-content {
 }
 
 .toolbar-button {
-	background-color: white;
+  background-color: white;
 }
 
 .toolbar-button-selected {
@@ -144,7 +142,6 @@ div.public-DraftEditor-content {
 /* Whiteboard styling */
 #colorsPalette {
   background-color: white;
-  border: 1px solid black;
   height: 250px;
   width: 50px;
   left: 0;
@@ -160,37 +157,78 @@ div.public-DraftEditor-content {
 
 #red {
   background-color: red;
+  border-top-right-radius: 25%;
+  transition: 0.2s;
+}
+
+#red:hover {
+  width: 70px;
 }
 
 #green {
   background-color: green;
+  transition: 0.2s;
+}
+
+#green:hover {
+  width: 70px;
 }
 
 #blue {
   background-color: blue;
+  transition: 0.2s;
+}
+
+#blue:hover {
+  width: 70px;
 }
 
 #black {
   background-color: black;
+  transition: 0.2s;
+}
+
+#black:hover {
+  width: 70px;
 }
 
 #purple {
   background-color: purple;
+  transition: 0.2s;
+  border-bottom-right-radius: 25%;
+}
+
+#purple:hover {
+  width: 70px;
 }
 
 #optionsPalette {
-  background-color: white;
-  border: 1px solid black;
-  height: 30px;
-  width: 40%;
+  border-radius: 0 0 5px 5px;
+  height: 35px;
+  width: 30%;
   left: 0;
   right: 0;
+  top: 10px;
   position: absolute;
   z-index: 100;
   margin: auto;
   display: flex;
   justify-content: space-around;
   align-items: center;
+}
+
+i {
+  background-color: red;
+  padding: 10px;
+  font-size: 20px;
+  border-radius: 50%;
+  color: white;
+  transition: 0.2s;
+}
+
+i:hover {
+  transition: 0.2s;
+  font-size: 30px;
 }
 
 #canvas {
@@ -211,18 +249,18 @@ div.public-DraftEditor-content {
 }
 
 .message-info {
-	display: flex;
-	flex-wrap: nowrap;
+  display: flex;
+  flex-wrap: nowrap;
 }
 
 .message-info > * {
-	margin-left: 1rem
+  margin-left: 1rem;
 }
 
 strong {
-	font-size: 16px;
+  font-size: 16px;
 }
 
 small {
-	margin-left: 1rem;
+  margin-left: 1rem;
 }
