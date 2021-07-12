@@ -11,6 +11,10 @@ app.get("/", (req, res) =>
   res.sendFile(path.join(__dirname, "..", "public/index.html"))
 );
 
+app.get("/board/:topic", (req, res) =>
+  res.sendFile(path.join(__dirname, "..", "public/board.html"))
+);
+
 io.on("connection", (socket) => {
   //console.log("a user connected")
   socket.on("disconnect", () => {
@@ -20,8 +24,10 @@ io.on("connection", (socket) => {
 
 io.on("connection", (socket) => {
   socket.on("join", (room) => {
-    console.log(`Socket ${socket.id} joining ${room}`);
+    //console.log(`Socket ${socket.id} joining ${room}`);
     socket.join(room);
+    var userCount = io.sockets.adapter.rooms.get(room).size;
+    io.to(room).emit("userCount", userCount);
   });
 });
 
@@ -36,7 +42,11 @@ io.on("connection", (socket) => {
   });
   socket.on("down", (data) => {
     const { payload, room } = data;
-    io.to(room).emit("draw", payload);
+    io.to(room).emit("down", payload);
+  });
+  socket.on("text", (data) => {
+    const { payload, room } = data;
+    io.to(room).emit("text", payload);
   });
 });
 

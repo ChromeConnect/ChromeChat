@@ -1,6 +1,7 @@
 /* Chat styling below */
 
 body {
+
 	max-width: 100%;
 	margin: 0 auto 1rem;
 	padding-bottom: 3rem;
@@ -13,6 +14,7 @@ body {
 }
 
 #form {
+
 	background: lightblue;
 	padding: 0.25rem;
 	position: fixed;
@@ -69,11 +71,11 @@ body {
 }
 
 #messages h5 {
-	margin-top: 2px;
-	margin-left: 15px;
-	margin-bottom: 5px;
-	color: darkgrey;
-	text-align: left;
+  margin-top: 2px;
+  margin-left: 15px;
+  margin-bottom: 5px;
+  color: darkgrey;
+  text-align: left;
 }
 
 .header {
@@ -116,8 +118,9 @@ div.DraftEditor-root {
   overflow-y: auto;
 }
 
-div.DraftEditor-editorContainer, div.public-DraftEditor-content {
-  height: 100%
+div.DraftEditor-editorContainer,
+div.public-DraftEditor-content {
+  height: 100%;
 }
 
 .toolbar-button {
@@ -125,7 +128,86 @@ div.DraftEditor-editorContainer, div.public-DraftEditor-content {
 }
 
 .toolbar-button-selected {
-	background-color: lightgray;
+  background-color: lightgray;
+}
+
+#canvas {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  right: 0;
+}
+
+/* Whiteboard styling */
+#colorsPalette {
+  background-color: white;
+  border: 1px solid black;
+  height: 250px;
+  width: 50px;
+  left: 0;
+  margin-top: 10%;
+  position: absolute;
+  z-index: 100;
+}
+
+.colorOption {
+  height: 50px;
+  width: 50px;
+}
+
+#red {
+  background-color: red;
+}
+
+#green {
+  background-color: green;
+}
+
+#blue {
+  background-color: blue;
+}
+
+#black {
+  background-color: black;
+}
+
+#purple {
+  background-color: purple;
+}
+
+#optionsPalette {
+  background-color: white;
+  border: 1px solid black;
+  height: 30px;
+  width: 40%;
+  left: 0;
+  right: 0;
+  position: absolute;
+  z-index: 100;
+  margin: auto;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+#canvas {
+  background-color: white;
+}
+
+#circularcursor {
+  visibility: hidden;
+  background-color: white;
+  border: 1px solid black;
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  -moz-border-radius: 50%;
+  -webkit-border-radius: 50%;
+  position: absolute;
+  z-index: 50;
 }
 
 .message-info {

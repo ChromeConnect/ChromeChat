@@ -1,55 +1,55 @@
-import React, { useState, useEffect } from "react";
-import history from "../history";
+import React, { useState, useEffect } from "react"
+import history from "../history"
 import {
-  Editor,
-  EditorState,
-  RichUtils,
-  convertToRaw,
-  convertFromRaw,
-  ContentState,
-  Modifier,
-} from "draft-js";
-import { convertToHTML } from "draft-convert";
-import "draft-js/dist/Draft.css";
-import Toolbar from "./toolbar/Toolbar";
-import { styleMap } from "./toolbar/styles";
-import draftToHtml from "draftjs-to-html";
+	Editor,
+	EditorState,
+	RichUtils,
+	convertToRaw,
+	convertFromRaw,
+	ContentState,
+	Modifier,
+} from "draft-js"
+import { convertToHTML } from "draft-convert"
+import "draft-js/dist/Draft.css"
+import Toolbar from "./toolbar/Toolbar"
+import { styleMap } from "./toolbar/styles"
+import draftToHtml from "draftjs-to-html"
 
-const Filter = require("bad-words");
-let room = null;
-let userName = null;
-const filter = new Filter();
-filter.addWords("Flatiron", "General", "Assembly");
+const Filter = require("bad-words")
+let room = null
+let userName = null
+const filter = new Filter()
+filter.addWords("Flatiron", "General", "Assembly")
 
 const removeSelectedBlocksStyle = (editorState) => {
-  const newContentState = RichUtils.tryToRemoveBlockStyle(editorState);
-  if (newContentState) {
-    return EditorState.push(editorState, newContentState, "change-block-type");
-  }
-  return editorState;
-};
+	const newContentState = RichUtils.tryToRemoveBlockStyle(editorState)
+	if (newContentState) {
+		return EditorState.push(editorState, newContentState, "change-block-type")
+	}
+	return editorState
+}
 
 const getResetEditorState = (editorState) => {
-  const blocks = editorState.getCurrentContent().getBlockMap().toList();
-  const updatedSelection = editorState.getSelection().merge({
-    anchorKey: blocks.first().get("key"),
-    anchorOffset: 0,
-    focusKey: blocks.last().get("key"),
-    focusOffset: blocks.last().getLength(),
-  });
-  const newContentState = Modifier.removeRange(
-    editorState.getCurrentContent(),
-    updatedSelection,
-    "forward"
-  );
+	const blocks = editorState.getCurrentContent().getBlockMap().toList()
+	const updatedSelection = editorState.getSelection().merge({
+		anchorKey: blocks.first().get("key"),
+		anchorOffset: 0,
+		focusKey: blocks.last().get("key"),
+		focusOffset: blocks.last().getLength(),
+	})
+	const newContentState = Modifier.removeRange(
+		editorState.getCurrentContent(),
+		updatedSelection,
+		"forward"
+	)
 
-  const newState = EditorState.push(
-    editorState,
-    newContentState,
-    "remove-range"
-  );
-  return removeSelectedBlocksStyle(newState);
-};
+	const newState = EditorState.push(
+		editorState,
+		newContentState,
+		"remove-range"
+	)
+	return removeSelectedBlocksStyle(newState)
+}
 
 const Chat = () => {
   var socket = io();
@@ -83,15 +83,28 @@ const Chat = () => {
     if (content.hasText()) {
       socket.emit("chat message", { payload, room });
       setEditorState(getResetEditorState(editorState));
-      firebase
-        .database()
-        .ref("sequelize")
-        .child(room)
-        .child("messages")
-        .push()
-        .set(payload);
+      if (room !== "Lobby") {
+				firebase
+					.database()
+					.ref("sequelize")
+					.child(room)
+					.child("messages")
+					.push()
+					.set(payload)
+			}
     }
   }
+  
+  	function handleBoard(e) {
+		e.preventDefault()
+		let splitRoom = room.split(" ").join("-")
+		window.open(
+			//"https://chromechat.herokuapp.com/",
+			`https://chromechat.herokuapp.com/board/${splitRoom}`,
+			splitRoom,
+			"height=700,width=1000,left=100,top=100,resizable=no,scrollbars=yes,toolbar=no,menubar=yes,location=no,directories=no, status=yes"
+		)
+	}
 
   function formatMessage(payload) {
     const parsedMessage = JSON.parse(payload.msg)
@@ -108,8 +121,6 @@ const Chat = () => {
 
     const sender = message.firstChild.firstChild.innerText
     const timestamp = message.firstChild.lastChild.innerText
-
-    console.log(timestamp, payload.timestamp)
 
     if (payload.userName === sender) {
       return true
@@ -190,6 +201,11 @@ const Chat = () => {
   socket.on("chat message", function (payload) {
     renderMessage(payload)
   });
+  
+  socket.on("userCount", function (userCount) {
+		let userCountText = document.getElementById("usercount")
+		userCountText.innerText = "Online Users: (" + userCount + ")"
+	})
 
   function handleReturn(event) {
     if (event.shiftKey) {
