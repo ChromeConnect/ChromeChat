@@ -83,13 +83,15 @@ const Chat = () => {
     if (content.hasText()) {
       socket.emit("chat message", { payload, room });
       setEditorState(getResetEditorState(editorState));
-      firebase
-        .database()
-        .ref("sequelize")
-        .child(room)
-        .child("messages")
-        .push()
-        .set(payload);
+      if (room !== "Lobby") {
+        firebase
+          .database()
+          .ref("sequelize")
+          .child(room)
+          .child("messages")
+          .push()
+          .set(payload);
+      }
     }
   }
 
