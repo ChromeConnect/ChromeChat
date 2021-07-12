@@ -52,38 +52,38 @@ const getResetEditorState = (editorState) => {
 }
 
 const Chat = () => {
-	var socket = io()
+  var socket = io();
 
-	const [editorState, setEditorState] = useState(() =>
-		EditorState.createEmpty()
-	)
+  const [editorState, setEditorState] = useState(() =>
+    EditorState.createEmpty()
+  );
 
-	const handleKeyCommand = (command, editorState) => {
-		const newState = RichUtils.handleKeyCommand(editorState, command)
+  const handleKeyCommand = (command, editorState) => {
+    const newState = RichUtils.handleKeyCommand(editorState, command);
 
-		if (newState) {
-			setEditorState(newState)
-			return "handled"
-		}
-		return "not handled"
-	}
+    if (newState) {
+      setEditorState(newState);
+      return "handled";
+    }
+    return "not handled";
+  };
 
-	function handleSubmit(e) {
-		e.preventDefault()
+  function handleSubmit(e) {
+    e.preventDefault();
 
-		const content = editorState.getCurrentContent()
-		let rawMessage = convertToRaw(content)
-		let stringMessage = JSON.stringify(rawMessage)
-		let payload = {
-			msg: stringMessage,
-			userName,
-			timestamp: new Date().toLocaleTimeString(),
-		}
+    const content = editorState.getCurrentContent();
+    let rawMessage = convertToRaw(content);
+    let stringMessage = JSON.stringify(rawMessage);
+    let payload = {
+      msg: stringMessage,
+      userName,
+      timestamp: new Date().toLocaleTimeString(),
+    };
 
-		if (content.hasText()) {
-			socket.emit("chat message", { payload, room })
-			setEditorState(getResetEditorState(editorState))
-			if (room !== "Lobby") {
+    if (content.hasText()) {
+      socket.emit("chat message", { payload, room });
+      setEditorState(getResetEditorState(editorState));
+      if (room !== "Lobby") {
 				firebase
 					.database()
 					.ref("sequelize")
@@ -92,10 +92,10 @@ const Chat = () => {
 					.push()
 					.set(payload)
 			}
-		}
-	}
+    }
+  }
 
-	function handleBoard(e) {
+  function handleBoard(e) {
 		e.preventDefault()
 		let splitRoom = room.split(" ").join("-")
 		window.open(
@@ -106,107 +106,133 @@ const Chat = () => {
 		)
 	}
 
-	function loadLastHundredMessages() {
-		var messages = document.getElementById("messages")
+  function formatMessage(payload) {
+    const parsedMessage = JSON.parse(payload.msg)
+    const messageFromRaw = convertFromRaw(parsedMessage)
+    let html = convertToHTML(messageFromRaw)
+    html = filter.clean(html)
+    return html
+  }
 
-		firebase
-			.database()
-			.ref("sequelize")
-			.child(room)
-			.child("messages")
-			.limitToLast(100)
-			.get()
-			.then((snapshot) => {
-				if (snapshot.exists()) {
-					let data = snapshot.val()
-					for (const key in data) {
-						const payload = data[key]
-						//add messsages below here
-						var item = document.createElement("div")
-						var sender = document.createElement("h5")
-						let parsedMessage = JSON.parse(payload.msg)
-						const msgFromRaw = convertFromRaw(parsedMessage)
-						let html = convertToHTML(msgFromRaw)
-						html = filter.clean(html)
-						item.innerHTML = html
-						sender.textContent = `-${
-							payload.userName[0].toUpperCase() + payload.userName.substring(1)
-						}(sent at ${payload.timestamp})`
-						messages.appendChild(item)
-						messages.appendChild(sender)
-						window.scrollTo(0, document.body.scrollHeight)
-					}
-				} else {
-					console.log("No data available")
-				}
-			})
-	}
+  function isLastMessageFromSameSender(payload, message) {
+    if (!message) {
+      return false
+    }
 
-	useEffect(() => {
-		const { pathname } = history.location
-		let splitPathName = pathname.split("+")
-		userName = splitPathName[0].substring(1)
-		room = splitPathName[1].split("-").join(" ")
-		document.title = room
-		const topic = document.getElementById("topic")
-		topic.innerText = `${room[0].toUpperCase() + room.substring(1)}`
-		socket.emit("join", room)
-		loadLastHundredMessages()
-	}, [])
+    const sender = message.firstChild.firstChild.innerText
+    const timestamp = message.firstChild.lastChild.innerText
 
-	socket.on("chat message", function (payload) {
-		var messages = document.getElementById("messages")
-		var item = document.createElement("div")
-		var sender = document.createElement("h5")
-		let parsedMessage = JSON.parse(payload.msg)
-		let html = draftToHtml(parsedMessage)
-		html = filter.clean(html)
-		console.log(html)
-		item.innerHTML = html
-		sender.textContent = `-${
-			payload.userName[0].toUpperCase() + payload.userName.substring(1)
-		}(sent at ${payload.timestamp})`
-		messages.appendChild(item)
-		messages.appendChild(sender)
-		window.scrollTo(0, document.body.scrollHeight)
+    if (payload.userName === sender) {
+      return true
+    }
+    return false
+  }
+
+  function renderMessage(payload) {
+    const messages = document.getElementById('messages')
+    const lastMessage = messages.lastChild
+
+    const item = document.createElement("div");
+    item.className = 'message'
+    item.innerHTML = formatMessage(payload)
+
+    if (!isLastMessageFromSameSender(payload, lastMessage)){
+      const container = document.createElement('div')
+      container.className = 'message-container'
+
+      const messageInfo = document.createElement('div')
+      messageInfo.className = 'message-info'
+
+      const sender = document.createElement("strong");
+      sender.textContent = payload.userName
+
+      const timestamp = document.createElement('small')
+      timestamp.textContent = payload.timestamp
+
+      messages.appendChild(container);
+      container.appendChild(messageInfo)
+      messageInfo.appendChild(sender)
+      messageInfo.appendChild(timestamp)
+      container.appendChild(item);
+    }
+
+    else {
+      const timestamp = document.createElement('small')
+      timestamp.textContent = payload.timestamp
+
+      lastMessage.appendChild(timestamp)
+      lastMessage.appendChild(item)
+    }
+    messages.scrollTo(0, messages.scrollHeight);
+  }
+
+  function loadLastHundredMessages() {
+    firebase
+      .database()
+      .ref("sequelize")
+      .child(room)
+      .child("messages")
+      .limitToLast(100)
+      .get()
+      .then((snapshot) => {
+        if (snapshot.exists()) {
+          let data = snapshot.val();
+          for (const key in data) {
+            const payload = data[key];
+            renderMessage(payload)
+          }
+        } else {
+          console.log("No data available");
+        }
+      });
+  }
+
+  useEffect(() => {
+    const { pathname } = history.location;
+    let splitPathName = pathname.split("+");
+    userName = splitPathName[0].substring(1);
+    room = splitPathName[1].split("-").join(" ");
+    document.title = room;
+
+    socket.emit("join", room);
+    loadLastHundredMessages();
+  }, []);
+
+  socket.on("chat message", function (payload) {
+    renderMessage(payload)
+  });
+
+  socket.on("userCount", function (userCount) {
+		// let userCountText = document.getElementById("usercount")
+		// userCountText.innerText = "Online Users: (" + userCount + ")"
 	})
 
-	socket.on("userCount", function (userCount) {
-		let userCountText = document.getElementById("usercount")
-		userCountText.innerText = "Online Users: (" + userCount + ")"
-	})
+  function handleReturn(event) {
+    if (event.shiftKey) {
+      setEditorState(RichUtils.insertSoftNewline(editorState));
+      return "handled";
+    }
+    return "not-handled";
+  }
 
-	function handleReturn(event) {
-		if (event.shiftKey) {
-			setEditorState(RichUtils.insertSoftNewline(editorState))
-			return "handled"
-		}
-		return "not-handled"
-	}
+  return (
+    <div>
+      <div id='chat-container'>
+        <div id="messages"></div>
+        <form id="form" onSubmit={handleSubmit}>
+          <Toolbar editorState={editorState} setEditorState={setEditorState} />
+          <Editor
+            editorState={editorState}
+            onChange={setEditorState}
+            handleKeyCommand={handleKeyCommand}
+            customStyleMap={styleMap}
+            handleReturn={handleReturn}
+          />
+          <button type="submit">Send</button>
+        </form>
+      </div>
+    </div>
+  );
+};
 
-	return (
-		<div>
-			<div className="header" id="myHeader">
-				<h2 id="topic"></h2>
-				<div id="usercount"></div>
-				<button id="whiteboard" onClick={handleBoard}>
-					Go to whiteboard
-				</button>
-			</div>
-			<div id="messages"></div>
-			<form id="form" onSubmit={handleSubmit}>
-				<Toolbar editorState={editorState} setEditorState={setEditorState} />
-				<Editor
-					editorState={editorState}
-					onChange={setEditorState}
-					handleKeyCommand={handleKeyCommand}
-					customStyleMap={styleMap}
-					handleReturn={handleReturn}
-				/>
-				<button type="submit">Send</button>
-			</form>
-		</div>
-	)
-}
-
-export default Chat
+export default Chat;

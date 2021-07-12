@@ -2,7 +2,7 @@ export const inlineStyles = [
   { type: "BOLD", iconClass: "fa fa-bold" },
   { type: "ITALIC", iconClass: "fa fa-italic" },
   { type: "UNDERLINE", iconClass: "fa fa-underline" },
-  {type: 'STRIKETHROUGH', iconClass: 'fa fa-strikethrough'},
+  { type: 'STRIKETHROUGH', iconClass: 'fa fa-strikethrough' },
   { type: "CODE", iconClass: "fa fa-code" },
 ];
 

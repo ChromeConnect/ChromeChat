@@ -1,77 +1,73 @@
 /* Chat styling below */
 
 body {
-  max-width: 70%;
-  margin: 0 auto 1rem;
-  padding-bottom: 3rem;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
-    Arial, sans-serif;
+
+	max-width: 100%;
+	margin: 0 auto 1rem;
+	padding-bottom: 3rem;
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
+		Arial, sans-serif;
+}
+
+#chat-container {
+	display: flex
 }
 
 #form {
-  max-width: 70%;
-  margin: 0 auto 1rem;
-  background: rgba(0, 0, 0, 0.15);
-  padding: 0.25rem;
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  display: flex;
-  box-sizing: border-box;
-  backdrop-filter: blur(10px);
-  flex-wrap: wrap;
-  justify-content: space-evenly;
-  align-items: flex-end;
-  height: 30%;
+
+	background: lightblue;
+	padding: 0.25rem;
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	display: flex;
+	box-sizing: border-box;
+	backdrop-filter: blur(10px);
+	flex-wrap: wrap;
+	justify-content: space-evenly;
+	align-items: flex-end;
+	flex: 1;
+	height: 25vh
 }
-/* #input {
+
+#form > button {
+	background: #6A66A3;
 	border: none;
 	padding: 0 1rem;
-	flex-grow: 1;
-	border-radius: 2rem;
 	margin: 0.25rem;
-} */
-/* #input:focus {
+	border-radius: 10px;
 	outline: none;
-} */
-#form > button {
-  background: rgb(33, 145, 33);
-  border: none;
-  padding: 0 1rem;
-  margin: 0.25rem;
-  border-radius: 10px;
-  outline: none;
-  color: #fff;
-  margin: 10px 10px 10px;
-  height: 1.5rem;
+	color: #fff;
+	margin: 10px 10px 10px;
+	height: 1.5rem
 }
 
 #messages {
-  display: flex;
-  flex-direction: column;
-  margin: 0;
-  padding: 0;
-  overflow-y: auto;
+	display: flex;
+	flex-direction: column;
+	margin: 0;
+	padding: 0;
+	overflow-y: auto;
+	position: absolute;
+	flex: 1;
+	height: 75vh;
+	width: 100vw
 }
 
-#messages > div {
-  background: #248bf5;
-  color: #fff;
-  /* position: relative; */
-  align-items: flex-start;
-  word-wrap: break-word;
-  width: fit-content;
-  max-width: 93%;
-  text-align: left;
-  border-radius: 25px;
-  margin-top: 10px;
-  margin-bottom: 0;
-  margin-left: 10px;
-  padding: 0.5rem 1rem;
-  text-align: left;
-  background: #248bf5;
-  overflow-y: auto;
+.message {
+	color: #4b494c;
+	position: relative;
+	align-items: flex-start;
+	word-wrap: break-word;
+	width: fit-content;
+	max-width: 93%;
+	text-align: left;
+	border-radius: 25px;
+	margin-left: 20px;
+	padding: 0.25rem .5rem;
+	text-align: left;
+	margin-bottom: 1rem;
 }
 
 #messages h5 {
@@ -83,43 +79,52 @@ body {
 }
 
 .header {
-  margin: auto;
-  width: inherit;
-  border-radius: 20px;
-  margin-top: 10px;
-  padding: 5px 5px;
-  background: #f4a261;
-  color: #fff;
-  text-align: center;
-  position: -webkit-sticky;
-  position: sticky;
-  top: 0;
-  z-index: 999;
+	margin: auto;
+	width: inherit;
+	border-radius: 20px;
+	margin-top: 10px;
+	padding: 5px 5px;
+	background: #f4a261;
+	color: #fff;
+	text-align: center;
+	position: -webkit-sticky;
+	position: sticky;
+	top: 0;
+	z-index: 999;
+	flex: 1
 }
 
 #editor-toolbar {
-  flex-basis: 100%;
-  margin-left: 12px;
+	display: flex;
+	flex-basis: 100%;
+	margin-left: 12px
+}
+
+#editor-toolbar > button {
+	color: #4b494c;
+	border: none
 }
 
 div.DraftEditor-root {
-  background-color: #fff;
-  position: relative;
-  word-wrap: break-word;
-  border-radius: 15px;
-  margin-top: 6px;
-  margin-bottom: 10px;
-  margin-left: 10px;
-  margin-right: 10px;
-  padding: 0.5rem 1rem;
-  flex-basis: 77%;
-  height: 65%;
+	background-color: #fff;
+	position: relative;
+	word-wrap: break-word;
+	border-radius: 15px;
+	margin-top: 6px;
+	margin-bottom: 10px;
+	margin-right: 10px;
+	padding: 0.5rem 1rem;
+	flex-basis: 77%;
   overflow-y: auto;
 }
 
 div.DraftEditor-editorContainer,
 div.public-DraftEditor-content {
   height: 100%;
+}
+
+.toolbar-button {
+	background-color: white;
 }
 
 .toolbar-button-selected {
@@ -203,4 +208,21 @@ div.public-DraftEditor-content {
   -webkit-border-radius: 50%;
   position: absolute;
   z-index: 50;
+}
+
+.message-info {
+	display: flex;
+	flex-wrap: nowrap;
+}
+
+.message-info > * {
+	margin-left: 1rem
+}
+
+strong {
+	font-size: 16px;
+}
+
+small {
+	margin-left: 1rem;
 }
