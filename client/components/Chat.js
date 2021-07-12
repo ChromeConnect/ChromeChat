@@ -94,7 +94,7 @@ const Chat = () => {
 			}
     }
   }
-  
+
   	function handleBoard(e) {
 		e.preventDefault()
 		let splitRoom = room.split(" ").join("-")
@@ -154,7 +154,6 @@ const Chat = () => {
       messageInfo.appendChild(sender)
       messageInfo.appendChild(timestamp)
       container.appendChild(item);
-      messages.scrollTo(0, messages.scrollHeight);
     }
 
     else {
@@ -164,6 +163,7 @@ const Chat = () => {
       lastMessage.appendChild(timestamp)
       lastMessage.appendChild(item)
     }
+    messages.scrollTo(0, messages.scrollHeight);
   }
 
   function loadLastHundredMessages() {
@@ -201,10 +201,10 @@ const Chat = () => {
   socket.on("chat message", function (payload) {
     renderMessage(payload)
   });
-  
+
   socket.on("userCount", function (userCount) {
-		let userCountText = document.getElementById("usercount")
-		userCountText.innerText = "Online Users: (" + userCount + ")"
+		// let userCountText = document.getElementById("usercount")
+		// userCountText.innerText = "Online Users: (" + userCount + ")"
 	})
 
   function handleReturn(event) {
