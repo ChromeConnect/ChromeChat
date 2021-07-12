@@ -95,7 +95,7 @@ const Chat = () => {
     }
   }
 
-  	function handleBoard(e) {
+  function handleBoard(e) {
 		e.preventDefault()
 		let splitRoom = room.split(" ").join("-")
 		window.open(
