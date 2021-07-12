@@ -13,7 +13,7 @@ body {
 }
 
 #form {
-	background: lightgray;
+	background: lightblue;
 	padding: 0.25rem;
 	position: fixed;
 	bottom: 0;
@@ -62,8 +62,7 @@ body {
 	width: 100vw
 }
 
-#messages > div {
-	background: lightblue;
+.message {
 	color: #4b494c;
 	position: relative;
 	align-items: flex-start;
@@ -72,11 +71,10 @@ body {
 	max-width: 93%;
 	text-align: left;
 	border-radius: 25px;
-	margin-top: 10px;
-	margin-bottom: 0;
-	margin-left: 10px;
+	margin-left: 20px;
 	padding: 0.25rem .5rem;
 	text-align: left;
+	margin-bottom: 1rem;
 }
 
 #messages h5 {
@@ -109,6 +107,7 @@ body {
 }
 
 #editor-toolbar > button {
+	color: #4b494c
 }
 
 div.DraftEditor-root {
@@ -130,4 +129,21 @@ div.DraftEditor-editorContainer, div.public-DraftEditor-content {
 
 .toolbar-button-selected {
 	background-color: lightgray;
+}
+
+.message-info {
+	display: flex;
+	flex-wrap: nowrap;
+}
+
+.message-info > * {
+	margin-left: 1rem
+}
+
+strong {
+	font-size: 16px;
+}
+
+small {
+	margin-left: 1rem;
 }
