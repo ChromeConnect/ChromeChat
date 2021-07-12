@@ -28,18 +28,9 @@ body {
 	flex: 1;
 	height: 25vh
 }
-/* #input {
-	border: none;
-	padding: 0 1rem;
-	flex-grow: 1;
-	border-radius: 2rem;
-	margin: 0.25rem;
-} */
-/* #input:focus {
-	outline: none;
-} */
+
 #form > button {
-	background: rgb(33, 145, 33);
+	background: #6A66A3;
 	border: none;
 	padding: 0 1rem;
 	margin: 0.25rem;
@@ -102,12 +93,14 @@ body {
 }
 
 #editor-toolbar {
+	display: flex;
 	flex-basis: 100%;
 	margin-left: 12px
 }
 
 #editor-toolbar > button {
-	color: #4b494c
+	color: #4b494c;
+	border: none
 }
 
 div.DraftEditor-root {
@@ -125,6 +118,10 @@ div.DraftEditor-root {
 
 div.DraftEditor-editorContainer, div.public-DraftEditor-content {
   height: 100%
+}
+
+.toolbar-button {
+	background-color: white;
 }
 
 .toolbar-button-selected {
