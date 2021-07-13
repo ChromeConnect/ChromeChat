@@ -27,7 +27,7 @@ io.on("connection", (socket) => {
     //console.log(`Socket ${socket.id} joining ${room}`);
     socket.join(room);
     var userCount = io.sockets.adapter.rooms.get(room).size;
-    io.to(room).emit("userCount", userCount);
+    io.to(room).emit("userCount", userCount, room);
   });
 });
 

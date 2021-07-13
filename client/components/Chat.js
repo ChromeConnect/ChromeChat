@@ -192,7 +192,6 @@ const Chat = () => {
     let splitPathName = pathname.split("+");
     userName = splitPathName[0].substring(1);
     room = splitPathName[1].split("-").join(" ");
-    document.title = room;
 
     socket.emit("join", room);
     loadLastHundredMessages();
@@ -202,9 +201,8 @@ const Chat = () => {
     renderMessage(payload)
   });
 
-  socket.on("userCount", function (userCount) {
-		// let userCountText = document.getElementById("usercount")
-		// userCountText.innerText = "Online Users: (" + userCount + ")"
+  socket.on("userCount", function (userCount, room) {
+    document.title = `${room} (${userCount})`
 	})
 
   function handleReturn(event) {
@@ -219,6 +217,7 @@ const Chat = () => {
     <div>
       <div id='chat-container'>
         <div id="messages"></div>
+        <button id='open-whiteboard' onClick={handleBoard}>Open Whiteboard</button>
         <form id="form" onSubmit={handleSubmit}>
           <Toolbar editorState={editorState} setEditorState={setEditorState} />
           <Editor
