@@ -25,6 +25,7 @@ const Toolbar = (props) => {
     return (
       <button
         key={index}
+        title={style.toolTip}
         onMouseDown={(event) => handleInlineStyle(event, style.type)}
         onClick={(event) => event.preventDefault()}
         className={className}
@@ -44,6 +45,7 @@ const Toolbar = (props) => {
     return (
       <button
         key={index}
+        title={block.toolTip}
         onMouseDown={(event) => handleBlockStyle(event, block.type)}
         onClick={(event) => event.preventDefault()}
         className={className}

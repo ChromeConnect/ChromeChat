@@ -31,15 +31,24 @@ body {
 }
 
 #form > button {
-  background: #6a66a3;
-  border: none;
-  padding: 0 1rem;
-  margin: 0.25rem;
-  border-radius: 10px;
-  outline: none;
-  color: #fff;
-  margin: 1rem 0 1rem;
-  height: 1.5rem;
+	background: #5454e7;
+	border: none;
+	border-radius: 10px;
+	outline: none;
+	margin: 1rem 0 1rem;
+	height: 1.5rem;
+	font-size: 20px;
+	color: white;
+	transition: 0.2s;
+	width: clamp(50px, 4vw, 90px)
+}
+
+#form > button:hover {
+	transition: 0.2s;
+	font-size: 25px;
+	height: max(30px, 20%);
+	width: max(50px, 5%);
+
 }
 
 #messages {
@@ -66,7 +75,7 @@ body {
   margin-left: 20px;
   padding: 0.25rem 0.5rem;
   text-align: left;
-  margin-bottom: 1rem;
+  margin-bottom: .25rem;
 }
 
 #messages h5 {
@@ -96,7 +105,7 @@ body {
 #editor-toolbar {
   display: flex;
   flex-basis: 100%;
-  margin-left: 12px;
+  margin-left: 6vw;
 }
 
 #editor-toolbar > button {
@@ -109,13 +118,13 @@ div.DraftEditor-root {
   position: relative;
   word-wrap: break-word;
   border-radius: 15px;
-  margin-top: 6px;
   margin-bottom: 10px;
   margin-right: 10px;
   padding: 0.5rem 1rem;
-  flex-basis: 77%;
+  flex-basis: 80%;
   overflow-y: auto;
 	max-height: 17vh;
+	margin-left: 1vw;
 }
 
 div.DraftEditor-editorContainer,
@@ -126,6 +135,13 @@ div.public-DraftEditor-content {
 
 .toolbar-button {
   background-color: white;
+	font-size: 16px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+}
+
+.toolbar-button:hover {
+	font-size: 20px;
 }
 
 .toolbar-button-selected {
@@ -133,8 +149,9 @@ div.public-DraftEditor-content {
 }
 
 .message-info {
-  display: flex;
-  flex-wrap: nowrap;
+	display: flex;
+	flex-wrap: nowrap;
+	margin-top: 1rem;
 }
 
 .message-info > * {
@@ -160,17 +177,24 @@ small {
 }
 
 #open-whiteboard {
-  position: fixed;
-  right: 1rem;
-  top: 1rem;
-  background: #6a66a3;
-  border: none;
-  padding: 0 1rem;
-  margin: 0.25rem;
-  border-radius: 10px;
-  outline: none;
-  color: #fff;
-  height: 1.5rem;
+	position: fixed;
+	right: 1rem;
+	top: 1rem;
+	background: #5454e7;
+	border: none;
+	padding: 10px;
+	margin: 0.25rem;
+	outline: none;
+	color: #fff;
+	font-size: 20px;
+	border-radius: 50%;
+	color: white;
+	transition: 0.2s;
+}
+
+#open-whiteboard i:hover {
+	transition: 0.2s;
+	font-size: 30px;
 }
 
 /* Whiteboard styling */
