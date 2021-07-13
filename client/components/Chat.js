@@ -77,7 +77,7 @@ const Chat = () => {
     let payload = {
       msg: stringMessage,
       userName,
-      timestamp: new Date().toLocaleTimeString(),
+      timestamp: new Date().toLocaleString(),
     };
 
     if (content.hasText()) {
@@ -114,27 +114,56 @@ const Chat = () => {
     return html
   }
 
-  function isLastMessageFromSameSender(payload, message) {
-    if (!message) {
+  function getDay(timestamp) {
+    return timestamp.split(',')[0]
+  }
+
+  function getTime(timestamp) {
+    return timestamp.split(',')[1]
+  }
+
+  function isLastMessageFromSameSender(payload, lastMessage) {
+    if (!lastMessage) {
       return false
     }
 
-    const sender = message.firstChild.firstChild.innerText
-    const timestamp = message.firstChild.lastChild.innerText
-
-    if (payload.userName === sender) {
+    if (payload.userName === lastMessage.userName) {
       return true
     }
     return false
   }
 
-  function renderMessage(payload) {
+  function isLastMessageFromSameDate(payload, lastMessage) {
+    console.log('payload', payload, ' lastmessage', lastMessage)
+
+    if (!lastMessage) {
+      return false
+    }
+
+    const lastMessageDay = getDay(lastMessage.timestamp)
+    const day = getDay(payload.timestamp)
+
+    if (lastMessageDay === day) {
+      return true
+    }
+
+    return false
+  }
+
+  const renderMessage = async (payload) => {
     const messages = document.getElementById('messages')
-    const lastMessage = messages.lastChild
+    const lastMessage = await getLastMessage()
 
     const item = document.createElement("div");
     item.className = 'message'
     item.innerHTML = formatMessage(payload)
+
+    if (!isLastMessageFromSameDate(payload, lastMessage)) {
+      const dateSeparator = document.createElement('div')
+      dateSeparator.className = 'date-separator'
+      dateSeparator.innerText = getDay(payload.timestamp)
+      messages.appendChild(dateSeparator)
+    }
 
     if (!isLastMessageFromSameSender(payload, lastMessage)){
       const container = document.createElement('div')
@@ -147,7 +176,7 @@ const Chat = () => {
       sender.textContent = payload.userName
 
       const timestamp = document.createElement('small')
-      timestamp.textContent = payload.timestamp
+      timestamp.textContent = getTime(payload.timestamp)
 
       messages.appendChild(container);
       container.appendChild(messageInfo)
@@ -158,11 +187,12 @@ const Chat = () => {
 
     else {
       const timestamp = document.createElement('small')
-      timestamp.textContent = payload.timestamp
+      timestamp.textContent = getTime(payload.timestamp)
 
       lastMessage.appendChild(timestamp)
       lastMessage.appendChild(item)
     }
+
     messages.scrollTo(0, messages.scrollHeight);
   }
 
@@ -187,6 +217,25 @@ const Chat = () => {
       });
   }
 
+  function getLastMessage() {
+    firebase
+      .database()
+      .ref('sequelize')
+      .child(room)
+      .child('messages')
+      .limitToLast(1)
+      .get()
+      .then((snapshot) => {
+        const lastMessageObj = snapshot.val()
+        if (lastMessageObj) {
+          console.log('lastmessageobj', Object.values(lastMessageObj)[0])
+          return Object.values(lastMessageObj)[0]
+        } else {
+          return null
+        }
+      })
+  }
+
   useEffect(() => {
     const { pathname } = history.location;
     let splitPathName = pathname.split("+");
@@ -194,7 +243,7 @@ const Chat = () => {
     room = splitPathName[1].split("-").join(" ");
 
     socket.emit("join", room);
-    loadLastHundredMessages();
+    //loadLastHundredMessages();
   }, []);
 
   socket.on("chat message", function (payload) {
