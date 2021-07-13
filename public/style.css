@@ -217,7 +217,7 @@ div.public-DraftEditor-content {
   align-items: center;
 }
 
-i {
+#optionsPalette i {
   background-color: red;
   padding: 10px;
   font-size: 20px;
@@ -226,7 +226,7 @@ i {
   transition: 0.2s;
 }
 
-i:hover {
+#optionsPalette i:hover {
   transition: 0.2s;
   font-size: 30px;
 }

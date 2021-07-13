@@ -17,7 +17,7 @@ app.get("/board/:topic", (req, res) =>
 
 io.on("connection", (socket) => {
   //console.log("a user connected")
-  socket.on("disconnect", () => {
+  socket.on("disconnect", (data) => {
     //console.log("user disconnected");
   });
 });
