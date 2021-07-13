@@ -31,16 +31,15 @@ body {
 }
 
 #form > button {
-	background: #6A66A3;
-	border: none;
-	padding: 0 1rem;
-	margin: 0.25rem;
-	border-radius: 10px;
-	outline: none;
-	color: #fff;
-	margin: 1rem 0 1rem;
-	height: 1.5rem
-
+  background: #6a66a3;
+  border: none;
+  padding: 0 1rem;
+  margin: 0.25rem;
+  border-radius: 10px;
+  outline: none;
+  color: #fff;
+  margin: 1rem 0 1rem;
+  height: 1.5rem;
 }
 
 #messages {
@@ -134,20 +133,20 @@ div.public-DraftEditor-content {
 }
 
 .message-info {
-	display: flex;
-	flex-wrap: nowrap;
+  display: flex;
+  flex-wrap: nowrap;
 }
 
 .message-info > * {
-	margin-left: 1rem
+  margin-left: 1rem;
 }
 
 strong {
-	font-size: 16px;
+  font-size: 16px;
 }
 
 small {
-	margin-left: 1rem;
+  margin-left: 1rem;
 }
 
 #canvas {
@@ -161,17 +160,17 @@ small {
 }
 
 #open-whiteboard {
-	position: fixed;
-	right: 1rem;
-	top: 1rem;
-	background: #6A66A3;
-	border: none;
-	padding: 0 1rem;
-	margin: 0.25rem;
-	border-radius: 10px;
-	outline: none;
-	color: #fff;
-	height: 1.5rem
+  position: fixed;
+  right: 1rem;
+  top: 1rem;
+  background: #6a66a3;
+  border: none;
+  padding: 0 1rem;
+  margin: 0.25rem;
+  border-radius: 10px;
+  outline: none;
+  color: #fff;
+  height: 1.5rem;
 }
 
 /* Whiteboard styling */
@@ -266,6 +265,7 @@ small {
 #optionsPalette i:hover {
   transition: 0.2s;
   font-size: 30px;
+  cursor: pointer;
 }
 
 #canvas {
