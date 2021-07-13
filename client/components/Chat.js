@@ -9,7 +9,6 @@ import {
 	ContentState,
 	Modifier,
 } from "draft-js"
-import { convertToHTML } from "draft-convert"
 import "draft-js/dist/Draft.css"
 import Toolbar from "./toolbar/Toolbar"
 import { styleMap } from "./toolbar/styles"
@@ -108,8 +107,8 @@ const Chat = () => {
 
   function formatMessage(payload) {
     const parsedMessage = JSON.parse(payload.msg)
-    const messageFromRaw = convertFromRaw(parsedMessage)
-    let html = convertToHTML(messageFromRaw)
+    let html = draftToHtml(parsedMessage)
+    console.log(html)
     html = filter.clean(html)
     return html
   }
