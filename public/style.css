@@ -116,13 +116,13 @@ div.DraftEditor-root {
   padding: 0.5rem 1rem;
   flex-basis: 77%;
   overflow-y: auto;
-	max-height: 20vh;
+	max-height: 17vh;
 }
 
 div.DraftEditor-editorContainer,
 div.public-DraftEditor-content {
   height: 100%;
-	max-height: 20vh
+	max-height: 17vh
 }
 
 .toolbar-button {
