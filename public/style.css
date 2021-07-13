@@ -33,22 +33,21 @@ body {
 #form > button {
 	background: #5454e7;
 	border: none;
-	padding: 2px 15px 0px 14px;
-	margin: 0.25rem;
 	border-radius: 10px;
 	outline: none;
-	color: #fff;
 	margin: 1rem 0 1rem;
 	height: 1.5rem;
 	font-size: 20px;
 	color: white;
 	transition: 0.2s;
+	width: clamp(50px, 4vw, 90px)
 }
 
 #form > button:hover {
 	transition: 0.2s;
 	font-size: 25px;
-	padding: 3px 20px 30px 18px
+	height: max(30px, 20%);
+	width: max(50px, 5%);
 }
 
 #messages {
@@ -105,7 +104,7 @@ body {
 #editor-toolbar {
   display: flex;
   flex-basis: 100%;
-  margin-left: 7vw;
+  margin-left: 6vw;
 }
 
 #editor-toolbar > button {
@@ -121,7 +120,7 @@ div.DraftEditor-root {
   margin-bottom: 10px;
   margin-right: 10px;
   padding: 0.5rem 1rem;
-  flex-basis: 77%;
+  flex-basis: 80%;
   overflow-y: auto;
 	max-height: 17vh;
 	margin-left: 1vw;
