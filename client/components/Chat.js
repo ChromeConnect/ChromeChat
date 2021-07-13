@@ -77,7 +77,7 @@ const Chat = () => {
     let payload = {
       msg: stringMessage,
       userName,
-      timestamp: new Date().toLocaleString(),
+      timestamp: new Date().toLocaleString([], { hour: '2-digit', minute: '2-digit', hour12: true }),
     };
 
     if (content.hasText()) {
