@@ -48,6 +48,7 @@ body {
 	font-size: 25px;
 	height: max(30px, 20%);
 	width: max(50px, 5%);
+
 }
 
 #messages {
@@ -154,15 +155,15 @@ div.public-DraftEditor-content {
 }
 
 .message-info > * {
-	margin-left: 1rem
+  margin-left: 1rem;
 }
 
 strong {
-	font-size: 16px;
+  font-size: 16px;
 }
 
 small {
-	margin-left: 1rem;
+  margin-left: 1rem;
 }
 
 #canvas {
@@ -288,6 +289,7 @@ small {
 #optionsPalette i:hover {
   transition: 0.2s;
   font-size: 30px;
+  cursor: pointer;
 }
 
 #canvas {
