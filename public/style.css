@@ -187,14 +187,17 @@ small {
   width: 50px;
 }
 
+.colorOption:hover {
+  cursor: pointer;
+}
+
 #red {
   background-color: red;
-  border-top-right-radius: 25%;
   transition: 0.2s;
 }
 
 #red:hover {
-  width: 70px;
+  width: 55px;
 }
 
 #green {
@@ -203,7 +206,7 @@ small {
 }
 
 #green:hover {
-  width: 70px;
+  width: 55px;
 }
 
 #blue {
@@ -212,7 +215,7 @@ small {
 }
 
 #blue:hover {
-  width: 70px;
+  width: 55px;
 }
 
 #black {
@@ -221,17 +224,16 @@ small {
 }
 
 #black:hover {
-  width: 70px;
+  width: 55px;
 }
 
 #purple {
   background-color: purple;
   transition: 0.2s;
-  border-bottom-right-radius: 25%;
 }
 
 #purple:hover {
-  width: 70px;
+  width: 55px;
 }
 
 #optionsPalette {
@@ -249,8 +251,8 @@ small {
   align-items: center;
 }
 
-i {
-  background-color: red;
+#optionsPalette i {
+  background-color: lightblue;
   padding: 10px;
   font-size: 20px;
   border-radius: 50%;
@@ -258,7 +260,7 @@ i {
   transition: 0.2s;
 }
 
-i:hover {
+#optionsPalette i:hover {
   transition: 0.2s;
   font-size: 30px;
 }
