@@ -155,14 +155,17 @@ div.public-DraftEditor-content {
   width: 50px;
 }
 
+.colorOption:hover {
+  cursor: pointer;
+}
+
 #red {
   background-color: red;
-  border-top-right-radius: 25%;
   transition: 0.2s;
 }
 
 #red:hover {
-  width: 70px;
+  width: 55px;
 }
 
 #green {
@@ -171,7 +174,7 @@ div.public-DraftEditor-content {
 }
 
 #green:hover {
-  width: 70px;
+  width: 55px;
 }
 
 #blue {
@@ -180,7 +183,7 @@ div.public-DraftEditor-content {
 }
 
 #blue:hover {
-  width: 70px;
+  width: 55px;
 }
 
 #black {
@@ -189,17 +192,16 @@ div.public-DraftEditor-content {
 }
 
 #black:hover {
-  width: 70px;
+  width: 55px;
 }
 
 #purple {
   background-color: purple;
   transition: 0.2s;
-  border-bottom-right-radius: 25%;
 }
 
 #purple:hover {
-  width: 70px;
+  width: 55px;
 }
 
 #optionsPalette {
