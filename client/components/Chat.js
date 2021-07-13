@@ -217,7 +217,9 @@ const Chat = () => {
     <div>
       <div id='chat-container'>
         <div id="messages"></div>
-        <button id='open-whiteboard' onClick={handleBoard}>Open Whiteboard</button>
+        <button id='open-whiteboard' onClick={handleBoard}>
+          <i id="go-to-whiteboard" className="fas fa-chalkboard"></i>
+        </button>
         <form id="form" onSubmit={handleSubmit}>
           <Toolbar editorState={editorState} setEditorState={setEditorState} />
           <Editor
@@ -227,7 +229,9 @@ const Chat = () => {
             customStyleMap={styleMap}
             handleReturn={handleReturn}
           />
-          <button type="submit">Send</button>
+          <button type="submit">
+          <i id="send" className="far fa-paper-plane"></i>
+          </button>
         </form>
       </div>
     </div>
