@@ -39,7 +39,7 @@ body {
 	border-radius: 10px;
 	outline: none;
 	color: #fff;
-	margin: 10px 10px 10px;
+	margin: 1rem 0 1rem;
 	height: 1.5rem
 }
 
@@ -131,6 +131,23 @@ div.public-DraftEditor-content {
   background-color: lightgray;
 }
 
+.message-info {
+	display: flex;
+	flex-wrap: nowrap;
+}
+
+.message-info > * {
+	margin-left: 1rem
+}
+
+strong {
+	font-size: 16px;
+}
+
+small {
+	margin-left: 1rem;
+}
+
 #canvas {
   position: absolute;
   width: 100%;
@@ -139,6 +156,20 @@ div.public-DraftEditor-content {
   top: 0;
   bottom: 0;
   right: 0;
+}
+
+#open-whiteboard {
+	position: fixed;
+	right: 1rem;
+	top: 1rem;
+	background: #6A66A3;
+	border: none;
+	padding: 0 1rem;
+	margin: 0.25rem;
+	border-radius: 10px;
+	outline: none;
+	color: #fff;
+	height: 1.5rem
 }
 
 /* Whiteboard styling */
@@ -210,19 +241,3 @@ div.public-DraftEditor-content {
   z-index: 50;
 }
 
-.message-info {
-	display: flex;
-	flex-wrap: nowrap;
-}
-
-.message-info > * {
-	margin-left: 1rem
-}
-
-strong {
-	font-size: 16px;
-}
-
-small {
-	margin-left: 1rem;
-}

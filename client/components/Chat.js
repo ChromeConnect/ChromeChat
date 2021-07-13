@@ -219,6 +219,7 @@ const Chat = () => {
     <div>
       <div id='chat-container'>
         <div id="messages"></div>
+        <button id='open-whiteboard' onClick={handleBoard}>Open Whiteboard</button>
         <form id="form" onSubmit={handleSubmit}>
           <Toolbar editorState={editorState} setEditorState={setEditorState} />
           <Editor
