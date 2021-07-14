@@ -76,7 +76,7 @@ const Chat = () => {
     let payload = {
       msg: stringMessage,
       userName,
-      timestamp: new Date().toLocaleString([], { dateStyle: 'short', timeStyle: 'short' }),
+      timestamp: new Date().toLocaleString([], { dateStyle: 'short', timeStyle: 'short', hour12: false }),
     };
 
     if (content.hasText()) {
@@ -155,6 +155,8 @@ const Chat = () => {
   }
 
   function renderMessageFromNewSender(payload, messages, item) {
+    item.className = 'first-message'
+
     const container = document.createElement('div')
     container.className = 'message-container'
 
@@ -172,6 +174,17 @@ const Chat = () => {
     messageInfo.appendChild(sender)
     messageInfo.appendChild(timestamp)
     container.appendChild(item);
+  }
+
+  function renderMessageFromSameSender(payload, messages, item) {
+    const timestamp = document.createElement('small')
+    timestamp.className = 'timestamp'
+    timestamp.textContent = getTime(payload.timestamp)
+
+    const lastMessageContainer = messages.lastChild
+
+    item.appendChild(timestamp)
+    lastMessageContainer.appendChild(item)
   }
 
   function renderDateSeparator(payload, messages) {
@@ -204,14 +217,7 @@ const Chat = () => {
     }
 
     else {
-      const timestamp = document.createElement('small')
-      timestamp.className = 'message-info'
-      timestamp.textContent = getTime(payload.timestamp)
-
-      const lastMessageContainer = messages.lastChild
-
-      lastMessageContainer.appendChild(timestamp)
-      lastMessageContainer.appendChild(item)
+      renderMessageFromSameSender(payload, messages, item)
     }
 
     messages.scrollTo(0, messages.scrollHeight);

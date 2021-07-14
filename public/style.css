@@ -55,19 +55,32 @@ body {
 	width: 100vw
 }
 
-.message {
+.message,.first-message {
 	color: #4b494c;
 	position: relative;
-	align-items: flex-start;
 	word-wrap: break-word;
 	width: fit-content;
 	max-width: 93%;
 	text-align: left;
 	border-radius: 25px;
-	margin-left: 20px;
-	padding: 0.25rem .5rem;
+	padding: 0 .5rem;
 	text-align: left;
-	margin-bottom: 1rem;
+	display: flex;
+	flex-flow: row-reverse;
+	align-items: center;
+}
+
+.first-message {
+	margin-left: 2.8rem;
+	margin-bottom: -5px;
+	margin-top: 5px
+}
+
+.timestamp {
+	justify-self: center;
+	font-size: 10px;
+	opacity: 75%;
+	font-family: monospace;
 }
 
 #messages h5 {
@@ -134,20 +147,24 @@ div.public-DraftEditor-content {
 .message-info {
 	display: flex;
 	flex-wrap: nowrap;
+	padding: 1em 0 0 0;
+	align-items: center;
 }
 
-.message-info > * {
-	margin-left: 1rem
+.message-info > small {
+	font-size: 14px;
+	margin-left: 2rem;
 }
 
-strong {
+.message-info > strong {
 	font-size: 16px;
-}
-
-small {
 	margin-left: 1rem;
 }
 
+small {
+	margin-right: 1rem;
+	font-family: monospace;
+}
 
 .date-separator {
 	display: flex;
