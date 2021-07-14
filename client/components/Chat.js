@@ -1,4 +1,4 @@
-import React, {  useEffect } from "react"
+import React, { useEffect } from "react"
 import useState from 'react-usestateref'
 import history from "../history"
 import {
@@ -20,34 +20,34 @@ const filter = new Filter()
 filter.addWords("Flatiron", "General", "Assembly")
 
 const removeSelectedBlocksStyle = (editorState) => {
-	const newContentState = RichUtils.tryToRemoveBlockStyle(editorState)
-	if (newContentState) {
-		return EditorState.push(editorState, newContentState, "change-block-type")
-	}
-	return editorState
-}
+  const newContentState = RichUtils.tryToRemoveBlockStyle(editorState);
+  if (newContentState) {
+    return EditorState.push(editorState, newContentState, "change-block-type");
+  }
+  return editorState;
+};
 
 const getResetEditorState = (editorState) => {
-	const blocks = editorState.getCurrentContent().getBlockMap().toList()
-	const updatedSelection = editorState.getSelection().merge({
-		anchorKey: blocks.first().get("key"),
-		anchorOffset: 0,
-		focusKey: blocks.last().get("key"),
-		focusOffset: blocks.last().getLength(),
-	})
-	const newContentState = Modifier.removeRange(
-		editorState.getCurrentContent(),
-		updatedSelection,
-		"forward"
-	)
+  const blocks = editorState.getCurrentContent().getBlockMap().toList();
+  const updatedSelection = editorState.getSelection().merge({
+    anchorKey: blocks.first().get("key"),
+    anchorOffset: 0,
+    focusKey: blocks.last().get("key"),
+    focusOffset: blocks.last().getLength(),
+  });
+  const newContentState = Modifier.removeRange(
+    editorState.getCurrentContent(),
+    updatedSelection,
+    "forward"
+  );
 
-	const newState = EditorState.push(
-		editorState,
-		newContentState,
-		"remove-range"
-	)
-	return removeSelectedBlocksStyle(newState)
-}
+  const newState = EditorState.push(
+    editorState,
+    newContentState,
+    "remove-range"
+  );
+  return removeSelectedBlocksStyle(newState);
+};
 
 const Chat = () => {
   var socket = io();
@@ -82,28 +82,27 @@ const Chat = () => {
     if (content.hasText()) {
       socket.emit("chat message", { payload, room });
       setEditorState(getResetEditorState(editorState));
-      if (room !== "Lobby") {
-				firebase
-					.database()
-					.ref("sequelize")
-					.child(room)
-					.child("messages")
-					.push()
-					.set(payload)
-			}
+      if (!room.contains("Lobby")) {
+        firebase
+          .database()
+          .ref("sequelize")
+          .child(room)
+          .child("messages")
+          .push()
+          .set(payload);
+      }
     }
   }
 
   function handleBoard(e) {
-		e.preventDefault()
-		let splitRoom = room.split(" ").join("-")
-		window.open(
-			//"https://chromechat.herokuapp.com/",
-			`https://chromechat.herokuapp.com/board/${splitRoom}`,
-			splitRoom,
-			"height=700,width=1000,left=100,top=100,resizable=no,scrollbars=yes,toolbar=no,menubar=yes,location=no,directories=no, status=yes"
-		)
-	}
+    e.preventDefault();
+    let splitRoom = room.split(" ").join("-");
+    window.open(
+      `https://chromechat.herokuapp.com/board/${splitRoom}`,
+      splitRoom,
+      "height=700,width=1000,left=100,top=100,resizable=no,scrollbars=yes,toolbar=no,menubar=yes,location=no,directories=no, status=yes"
+    );
+  }
 
   function formatMessage(payload) {
     const parsedMessage = JSON.parse(payload.msg)
@@ -204,8 +203,8 @@ const Chat = () => {
     const lastMessage = prevMessageRef.current
 
     const item = document.createElement("div");
-    item.className = 'message'
-    item.innerHTML = formatMessage(payload)
+    item.className = "message";
+    item.innerHTML = formatMessage(payload);
 
     if (isFirstMessage(messages) || !isLastMessageFromSameDate(payload, lastMessage)) { //always render the date separator and sender name for first message displayed
       renderDateSeparator(payload, messages)
@@ -248,9 +247,15 @@ const Chat = () => {
   useEffect(() => {
     const { pathname } = history.location;
     let splitPathName = pathname.split("+");
-    userName = splitPathName[0].substring(1);
+    userName = splitPathName[0].split("/").pop();
     room = splitPathName[1].split("-").join(" ");
-
+    if (pathname.includes("sequelize")) {
+      room = `Sequelize: ${room}`;
+    } else if (pathname.includes("react")) {
+      room = `React: ${room}`;
+    } else if (pathname.includes("express")) {
+      room = `Express: ${room}`;
+    }
     socket.emit("join", room);
     loadLastHundredMessages();
   }, []);
@@ -261,8 +266,8 @@ const Chat = () => {
   });
 
   socket.on("userCount", function (userCount, room) {
-    document.title = `${room} (${userCount})`
-	})
+    document.title = `${room} (${userCount})`;
+  });
 
   function handleReturn(event) {
     if (event.shiftKey) {
@@ -274,9 +279,15 @@ const Chat = () => {
 
   return (
     <div>
-      <div id='chat-container'>
+      <div id="chat-container">
         <div id="messages"></div>
-        <button id='open-whiteboard' onClick={handleBoard}>Open Whiteboard</button>
+        <button
+          id="open-whiteboard"
+          title="Go To Whiteboard"
+          onClick={handleBoard}
+        >
+          <i id="go-to-whiteboard" className="fas fa-chalkboard"></i>
+        </button>
         <form id="form" onSubmit={handleSubmit}>
           <Toolbar editorState={editorState} setEditorState={setEditorState} />
           <Editor
@@ -286,7 +297,9 @@ const Chat = () => {
             customStyleMap={styleMap}
             handleReturn={handleReturn}
           />
-          <button type="submit">Send</button>
+          <button title="Send Message" type="submit">
+            <i id="send" className="far fa-paper-plane"></i>
+          </button>
         </form>
       </div>
     </div>

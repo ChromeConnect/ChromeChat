@@ -2,7 +2,7 @@
 
 ## About The Project
 
-!['ChromeChat'](https://github.com/GracefullyHotter/GracefullyHotter/blob/main/public/gracefullyhotterscreenshot.png)
+!['ChromeChat'](https://github.com/ChromeConnect/ChromeConnect/blob/main/public/ChromeConnect.png?raw=true)
 
 ChromeChat is a realtime chatting website that has the following features:
 

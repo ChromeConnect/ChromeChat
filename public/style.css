@@ -1,58 +1,66 @@
 /* Chat styling below */
 
 body {
-
-	max-width: 100%;
-	margin: 0 auto 1rem;
-	padding-bottom: 3rem;
-	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
-		Arial, sans-serif;
+  max-width: 100%;
+  margin: 0 auto 1rem;
+  padding-bottom: 3rem;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
+    Arial, sans-serif;
+	max-height: 100%;
 }
 
 #chat-container {
-	display: flex
+  display: flex;
 }
 
 #form {
-
-	background: lightblue;
-	padding: 0.25rem;
-	position: fixed;
-	bottom: 0;
-	left: 0;
-	right: 0;
-	display: flex;
-	box-sizing: border-box;
-	backdrop-filter: blur(10px);
-	flex-wrap: wrap;
-	justify-content: space-evenly;
-	align-items: flex-end;
-	flex: 1;
-	height: 25vh
+  background: lightblue;
+  padding: 0.25rem;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  box-sizing: border-box;
+  backdrop-filter: blur(10px);
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  align-items: flex-end;
+  flex: 1;
+  height: 25vh;
 }
 
 #form > button {
-	background: #6A66A3;
+	background: #5454e7;
 	border: none;
-	padding: 0 1rem;
-	margin: 0.25rem;
 	border-radius: 10px;
 	outline: none;
-	color: #fff;
 	margin: 1rem 0 1rem;
-	height: 1.5rem
+	height: 1.5rem;
+	font-size: 20px;
+	color: white;
+	transition: 0.2s;
+	width: clamp(50px, 4vw, 90px)
+}
+
+#form > button:hover {
+	transition: 0.2s;
+	font-size: 25px;
+	height: max(30px, 20%);
+	width: max(50px, 5%);
+
 }
 
 #messages {
-	display: flex;
-	flex-direction: column;
-	margin: 0;
-	padding: 0;
-	overflow-y: auto;
-	position: absolute;
-	flex: 1;
-	height: 75vh;
-	width: 100vw
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+  overflow-y: auto;
+  position: absolute;
+  flex: 1;
+  height: 75vh;
+  width: 100vw;
 }
 
 .message,.first-message {
@@ -92,52 +100,61 @@ body {
 }
 
 .header {
-	margin: auto;
-	width: inherit;
-	border-radius: 20px;
-	margin-top: 10px;
-	padding: 5px 5px;
-	background: #f4a261;
-	color: #fff;
-	text-align: center;
-	position: -webkit-sticky;
-	position: sticky;
-	top: 0;
-	z-index: 999;
-	flex: 1
+  margin: auto;
+  width: inherit;
+  border-radius: 20px;
+  margin-top: 10px;
+  padding: 5px 5px;
+  background: #f4a261;
+  color: #fff;
+  text-align: center;
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  z-index: 999;
+  flex: 1;
 }
 
 #editor-toolbar {
-	display: flex;
-	flex-basis: 100%;
-	margin-left: 12px
+  display: flex;
+  flex-basis: 100%;
+  margin-left: 6vw;
 }
 
 #editor-toolbar > button {
-	color: #4b494c;
-	border: none
+  color: #4b494c;
+  border: none;
 }
 
 div.DraftEditor-root {
-	background-color: #fff;
-	position: relative;
-	word-wrap: break-word;
-	border-radius: 15px;
-	margin-top: 6px;
-	margin-bottom: 10px;
-	margin-right: 10px;
-	padding: 0.5rem 1rem;
-	flex-basis: 77%;
+  background-color: #fff;
+  position: relative;
+  word-wrap: break-word;
+  border-radius: 15px;
+  margin-bottom: 10px;
+  margin-right: 10px;
+  padding: 0.5rem 1rem;
+  flex-basis: 80%;
   overflow-y: auto;
+	max-height: 17vh;
+	margin-left: 1vw;
 }
 
 div.DraftEditor-editorContainer,
 div.public-DraftEditor-content {
   height: 100%;
+	max-height: 17vh
 }
 
 .toolbar-button {
-	background-color: white;
+  background-color: white;
+	font-size: 16px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+}
+
+.toolbar-button:hover {
+	font-size: 20px;
 }
 
 .toolbar-button-selected {
@@ -200,20 +217,26 @@ small {
 	position: fixed;
 	right: 1rem;
 	top: 1rem;
-	background: #6A66A3;
+	background: #5454e7;
 	border: none;
-	padding: 0 1rem;
+	padding: 10px;
 	margin: 0.25rem;
-	border-radius: 10px;
 	outline: none;
 	color: #fff;
-	height: 1.5rem
+	font-size: 20px;
+	border-radius: 50%;
+	color: white;
+	transition: 0.2s;
+}
+
+#open-whiteboard i:hover {
+	transition: 0.2s;
+	font-size: 30px;
 }
 
 /* Whiteboard styling */
 #colorsPalette {
   background-color: white;
-  border: 1px solid black;
   height: 250px;
   width: 50px;
   left: 0;
@@ -227,39 +250,83 @@ small {
   width: 50px;
 }
 
+.colorOption:hover {
+  cursor: pointer;
+}
+
 #red {
   background-color: red;
+  transition: 0.2s;
+}
+
+#red:hover {
+  width: 55px;
 }
 
 #green {
   background-color: green;
+  transition: 0.2s;
+}
+
+#green:hover {
+  width: 55px;
 }
 
 #blue {
   background-color: blue;
+  transition: 0.2s;
+}
+
+#blue:hover {
+  width: 55px;
 }
 
 #black {
   background-color: black;
+  transition: 0.2s;
+}
+
+#black:hover {
+  width: 55px;
 }
 
 #purple {
   background-color: purple;
+  transition: 0.2s;
+}
+
+#purple:hover {
+  width: 55px;
 }
 
 #optionsPalette {
-  background-color: white;
-  border: 1px solid black;
-  height: 30px;
-  width: 40%;
+  border-radius: 0 0 5px 5px;
+  height: 35px;
+  width: 30%;
   left: 0;
   right: 0;
+  top: 10px;
   position: absolute;
   z-index: 100;
   margin: auto;
   display: flex;
   justify-content: space-around;
   align-items: center;
+}
+
+#optionsPalette i {
+  background-color: lightblue;
+  padding: 10px;
+  font-size: 20px;
+  border-radius: 50%;
+  color: white;
+  transition: 0.2s;
+}
+
+#optionsPalette i:hover {
+  transition: 0.2s;
+  font-size: 30px;
+  cursor: pointer;
 }
 
 #canvas {
@@ -278,4 +345,3 @@ small {
   position: absolute;
   z-index: 50;
 }
-
