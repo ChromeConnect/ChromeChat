@@ -83,7 +83,7 @@ const Chat = () => {
     if (content.hasText()) {
       socket.emit("chat message", { payload, room });
       setEditorState(getResetEditorState(editorState));
-      if (room.contains("Lobby")) {
+      if (!room.contains("Lobby")) {
         firebase
           .database()
           .ref("sequelize")
