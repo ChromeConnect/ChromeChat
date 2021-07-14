@@ -63,19 +63,32 @@ body {
   width: 100vw;
 }
 
-.message {
-  color: #4b494c;
-  position: relative;
-  align-items: flex-start;
-  word-wrap: break-word;
-  width: fit-content;
-  max-width: 93%;
-  text-align: left;
-  border-radius: 25px;
-  margin-left: 20px;
-  padding: 0.25rem 0.5rem;
-  text-align: left;
-  margin-bottom: .25rem;
+.message,.first-message {
+	color: #4b494c;
+	position: relative;
+	word-wrap: break-word;
+	width: fit-content;
+	max-width: 93%;
+	text-align: left;
+	border-radius: 25px;
+	padding: 0 .5rem;
+	text-align: left;
+	display: flex;
+	flex-flow: row-reverse;
+	align-items: center;
+}
+
+.first-message {
+	margin-left: 2.8rem;
+	margin-bottom: -5px;
+	margin-top: 5px
+}
+
+.timestamp {
+	justify-self: center;
+	font-size: 10px;
+	opacity: 75%;
+	font-family: monospace;
 }
 
 #messages h5 {
@@ -151,19 +164,43 @@ div.public-DraftEditor-content {
 .message-info {
 	display: flex;
 	flex-wrap: nowrap;
-	margin-top: 1rem;
+	padding: 1em 0 0 0;
+	align-items: center;
 }
 
-.message-info > * {
-  margin-left: 1rem;
+.message-info > small {
+	font-size: 14px;
+	margin-left: 2rem;
 }
 
-strong {
-  font-size: 16px;
+.message-info > strong {
+	font-size: 16px;
+	margin-left: 1rem;
 }
 
 small {
-  margin-left: 1rem;
+	margin-right: 1rem;
+	font-family: monospace;
+}
+
+.date-separator {
+	display: flex;
+	align-items: center;
+	text-align: center;
+}
+
+.date-separator::before,
+.date-separator::after {
+	content: '';
+	flex: 1;
+	border-bottom: 2px solid #6a66a3;
+}
+
+.date-separator-content {
+	background-color: #6a66a3;
+	padding: .3em .5em .3em .5em;
+	border-radius: 10px;
+	color: white
 }
 
 #canvas {

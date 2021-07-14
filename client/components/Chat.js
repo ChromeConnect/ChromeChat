@@ -1,25 +1,23 @@
-import React, { useState, useEffect } from "react";
-import history from "../history";
+import React, { useEffect } from "react"
+import useState from 'react-usestateref'
+import history from "../history"
 import {
-  Editor,
-  EditorState,
-  RichUtils,
-  convertToRaw,
-  convertFromRaw,
-  ContentState,
-  Modifier,
-} from "draft-js";
-import { convertToHTML } from "draft-convert";
-import "draft-js/dist/Draft.css";
-import Toolbar from "./toolbar/Toolbar";
-import { styleMap } from "./toolbar/styles";
-import draftToHtml from "draftjs-to-html";
+	Editor,
+	EditorState,
+	RichUtils,
+	convertToRaw,
+	Modifier,
+} from "draft-js"
+import "draft-js/dist/Draft.css"
+import Toolbar from "./toolbar/Toolbar"
+import { styleMap } from "./toolbar/styles"
+import draftToHtml from "draftjs-to-html"
 
-const Filter = require("bad-words");
-let room = null;
-let userName = null;
-const filter = new Filter();
-filter.addWords("Flatiron", "General", "Assembly");
+const Filter = require("bad-words")
+let room = null
+let userName = null
+const filter = new Filter()
+filter.addWords("Flatiron", "General", "Assembly")
 
 const removeSelectedBlocksStyle = (editorState) => {
   const newContentState = RichUtils.tryToRemoveBlockStyle(editorState);
@@ -57,6 +55,7 @@ const Chat = () => {
   const [editorState, setEditorState] = useState(() =>
     EditorState.createEmpty()
   );
+  const [prevMessage, setPrevMessage, prevMessageRef] = useState({})
 
   const handleKeyCommand = (command, editorState) => {
     const newState = RichUtils.handleKeyCommand(editorState, command);
@@ -77,7 +76,7 @@ const Chat = () => {
     let payload = {
       msg: stringMessage,
       userName,
-      timestamp: new Date().toLocaleTimeString(),
+      timestamp: new Date().toLocaleString([], { dateStyle: 'short', timeStyle: 'short', hour12: false }),
     };
 
     if (content.hasText()) {
@@ -106,60 +105,120 @@ const Chat = () => {
   }
 
   function formatMessage(payload) {
-    const parsedMessage = JSON.parse(payload.msg);
-    const messageFromRaw = convertFromRaw(parsedMessage);
-    let html = convertToHTML(messageFromRaw);
-    html = filter.clean(html);
-    return html;
+    const parsedMessage = JSON.parse(payload.msg)
+    let html = draftToHtml(parsedMessage)
+    html = filter.clean(html)
+    return html
   }
 
-  function isLastMessageFromSameSender(payload, message) {
-    if (!message) {
-      return false;
-    }
-
-    const sender = message.firstChild.firstChild.innerText;
-    const timestamp = message.firstChild.lastChild.innerText;
-
-    if (payload.userName === sender) {
-      return true;
-    }
-    return false;
+  function getDay(timestamp) {
+    return timestamp.split(',')[0]
   }
 
-  function renderMessage(payload) {
-    const messages = document.getElementById("messages");
-    const lastMessage = messages.lastChild;
+  function getTime(timestamp) {
+    return timestamp.split(',')[1]
+  }
+
+  function isLastMessageFromSameSender(payload, lastMessage) {
+    if (!lastMessage) {
+      return false
+    }
+
+    if (payload.userName === lastMessage.userName) {
+      return true
+    }
+    return false
+  }
+
+  function isLastMessageFromSameDate(payload, lastMessage) {
+    if (!lastMessage) {
+      return false
+    }
+
+    const lastMessageDay = getDay(lastMessage.timestamp)
+    const day = getDay(payload.timestamp)
+
+
+    if (lastMessageDay === day) {
+      return true
+    }
+
+    return false
+  }
+
+  function isFirstMessage(messages) {
+    if (messages.hasChildNodes()) {
+      return false
+    }
+    return true
+  }
+
+  function renderMessageFromNewSender(payload, messages, item) {
+    item.className = 'first-message'
+
+    const container = document.createElement('div')
+    container.className = 'message-container'
+
+    const messageInfo = document.createElement('div')
+    messageInfo.className = 'message-info'
+
+    const sender = document.createElement("strong");
+    sender.textContent = payload.userName
+
+    const timestamp = document.createElement('small')
+    timestamp.textContent = getTime(payload.timestamp)
+
+    messages.appendChild(container);
+    container.appendChild(messageInfo)
+    messageInfo.appendChild(sender)
+    messageInfo.appendChild(timestamp)
+    container.appendChild(item);
+  }
+
+  function renderMessageFromSameSender(payload, messages, item) {
+    const timestamp = document.createElement('small')
+    timestamp.className = 'timestamp'
+    timestamp.textContent = getTime(payload.timestamp)
+
+    const lastMessageContainer = messages.lastChild
+
+    item.appendChild(timestamp)
+    lastMessageContainer.appendChild(item)
+  }
+
+  function renderDateSeparator(payload, messages) {
+    const dateSeparator = document.createElement('div')
+    dateSeparator.className = 'date-separator'
+
+    const dateSeparatorContent = document.createElement('div')
+    dateSeparatorContent.className = 'date-separator-content'
+    dateSeparatorContent.innerText = `${getDay(payload.timestamp)} ▼`
+
+    dateSeparator.appendChild(dateSeparatorContent)
+    messages.appendChild(dateSeparator)
+  }
+
+  const renderMessage = (payload) => {
+    const messages = document.getElementById('messages')
+    const lastMessage = prevMessageRef.current
 
     const item = document.createElement("div");
     item.className = "message";
     item.innerHTML = formatMessage(payload);
 
-    if (!isLastMessageFromSameSender(payload, lastMessage)) {
-      const container = document.createElement("div");
-      container.className = "message-container";
-
-      const messageInfo = document.createElement("div");
-      messageInfo.className = "message-info";
-
-      const sender = document.createElement("strong");
-      sender.textContent = payload.userName;
-
-      const timestamp = document.createElement("small");
-      timestamp.textContent = payload.timestamp;
-
-      messages.appendChild(container);
-      container.appendChild(messageInfo);
-      messageInfo.appendChild(sender);
-      messageInfo.appendChild(timestamp);
-      container.appendChild(item);
-    } else {
-      const timestamp = document.createElement("small");
-      timestamp.textContent = payload.timestamp;
-
-      lastMessage.appendChild(timestamp);
-      lastMessage.appendChild(item);
+    if (isFirstMessage(messages) || !isLastMessageFromSameDate(payload, lastMessage)) { //always render the date separator and sender name for first message displayed
+      renderDateSeparator(payload, messages)
+      renderMessageFromNewSender(payload, messages, item)
     }
+
+    else if (!isLastMessageFromSameSender(payload, lastMessage)){
+      renderMessageFromNewSender(payload, messages, item)
+    }
+
+    else {
+      renderMessageFromSameSender(payload, messages, item)
+    }
+
     messages.scrollTo(0, messages.scrollHeight);
   }
 
@@ -176,7 +235,8 @@ const Chat = () => {
           let data = snapshot.val();
           for (const key in data) {
             const payload = data[key];
-            renderMessage(payload);
+            renderMessage(payload)
+            setPrevMessage(payload)
           }
         } else {
           console.log("No data available");
@@ -201,7 +261,8 @@ const Chat = () => {
   }, []);
 
   socket.on("chat message", function (payload) {
-    renderMessage(payload);
+    renderMessage(payload)
+    setPrevMessage(payload) //the incoming message is the previous message when rendering the next message
   });
 
   socket.on("userCount", function (userCount, room) {
