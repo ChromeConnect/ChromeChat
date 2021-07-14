@@ -178,7 +178,12 @@ const Chat = () => {
   function renderDateSeparator(payload, messages) {
     const dateSeparator = document.createElement('div')
     dateSeparator.className = 'date-separator'
-    dateSeparator.innerText = getDay(payload.timestamp)
+
+    const dateSeparatorContent = document.createElement('div')
+    dateSeparatorContent.className = 'date-separator-content'
+    dateSeparatorContent.innerText = `${getDay(payload.timestamp)} ▼`
+
+    dateSeparator.appendChild(dateSeparatorContent)
     messages.appendChild(dateSeparator)
   }
 

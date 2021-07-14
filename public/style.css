@@ -148,6 +148,7 @@ small {
 	margin-left: 1rem;
 }
 
+
 .date-separator {
 	display: flex;
 	align-items: center;
@@ -158,15 +159,14 @@ small {
 .date-separator::after {
 	content: '';
 	flex: 1;
-	border-bottom: 1px solid #000;
+	border-bottom: 2px solid #6a66a3;
 }
 
-.date-separator:not(:empty)::before {
-	margin-right: .25em;
-}
-
-.date-separator:not(:empty)::after {
-	margin-left: .25em;
+.date-separator-content {
+	background-color: #6a66a3;
+	padding: .3em;
+	border-radius: 10px;
+	color: white
 }
 
 #canvas {
