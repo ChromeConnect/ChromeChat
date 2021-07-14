@@ -103,7 +103,6 @@ socket.emit("join", room);
 socket.on("draw", function ({ x, y, colorOption }) {
   if (colorOption === "white") ctx.lineWidth = 20.0;
   else ctx.lineWidth = 3.0;
-  moveTo(x, y); //testing
   ctx.lineTo(x, y);
   ctx.stroke();
   ctx.strokeStyle = colorOption;
