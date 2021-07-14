@@ -18,9 +18,8 @@ ChromeChat is a realtime chatting website that has the following features:
 - [React](https://reactjs.org/)
 - [React-Router](https://reactrouter.com/)
 - [Heroku](https://www.heroku.com/home)
-- [React-Router](https://reactrouter.com/)
-- [Heroku](https://www.heroku.com/home)
 - [Socket.io](https://socket.io/)
+- [Draft.js](draftjs.org)
 - [bad-words](https://www.npmjs.com/package/bad-words)
 
 ## Contributors
