@@ -76,7 +76,7 @@ const Chat = () => {
     let payload = {
       msg: stringMessage,
       userName,
-      timestamp: new Date().toLocaleString([], { hour: '2-digit', minute: '2-digit', hour12: true }),
+      timestamp: new Date().toLocaleString([], { dateStyle: 'short', timeStyle: 'short' }),
     };
 
     if (content.hasText()) {
@@ -108,7 +108,6 @@ const Chat = () => {
   function formatMessage(payload) {
     const parsedMessage = JSON.parse(payload.msg)
     let html = draftToHtml(parsedMessage)
-    console.log(html)
     html = filter.clean(html)
     return html
   }
@@ -149,39 +148,55 @@ const Chat = () => {
     return false
   }
 
-  const renderMessage = async (payload) => {
+  function isFirstMessage(messages) {
+    if (messages.hasChildNodes()) {
+      return false
+    }
+    return true
+  }
+
+  function renderMessageFromNewSender(payload, messages, item) {
+    const container = document.createElement('div')
+    container.className = 'message-container'
+
+    const messageInfo = document.createElement('div')
+    messageInfo.className = 'message-info'
+
+    const sender = document.createElement("strong");
+    sender.textContent = payload.userName
+
+    const timestamp = document.createElement('small')
+    timestamp.textContent = getTime(payload.timestamp)
+
+    messages.appendChild(container);
+    container.appendChild(messageInfo)
+    messageInfo.appendChild(sender)
+    messageInfo.appendChild(timestamp)
+    container.appendChild(item);
+  }
+
+  function renderDateSeparator(payload, messages) {
+    const dateSeparator = document.createElement('div')
+    dateSeparator.className = 'date-separator'
+    dateSeparator.innerText = getDay(payload.timestamp)
+    messages.appendChild(dateSeparator)
+  }
+
+  const renderMessage = (payload) => {
     const messages = document.getElementById('messages')
-    const lastMessage = await getLastMessage()
+    const lastMessage = getLastMessage()
 
     const item = document.createElement("div");
     item.className = 'message'
     item.innerHTML = formatMessage(payload)
 
-    if (!isLastMessageFromSameDate(payload, lastMessage)) {
-      const dateSeparator = document.createElement('div')
-      dateSeparator.className = 'date-separator'
-      dateSeparator.innerText = getDay(payload.timestamp)
-      messages.appendChild(dateSeparator)
+    if (isFirstMessage || !isLastMessageFromSameDate(payload, lastMessage)) { //always render the date separator and sender name for first message displayed
+      renderDateSeparator(payload, messages)
+      renderMessageFromNewSender(payload, messages, item)
     }
 
-    if (!isLastMessageFromSameSender(payload, lastMessage)){
-      const container = document.createElement('div')
-      container.className = 'message-container'
-
-      const messageInfo = document.createElement('div')
-      messageInfo.className = 'message-info'
-
-      const sender = document.createElement("strong");
-      sender.textContent = payload.userName
-
-      const timestamp = document.createElement('small')
-      timestamp.textContent = getTime(payload.timestamp)
-
-      messages.appendChild(container);
-      container.appendChild(messageInfo)
-      messageInfo.appendChild(sender)
-      messageInfo.appendChild(timestamp)
-      container.appendChild(item);
+    else if (!isLastMessageFromSameSender(payload, lastMessage)){
+      renderMessageFromNewSender(payload, messages, item)
     }
 
     else {
@@ -217,22 +232,26 @@ const Chat = () => {
   }
 
   function getLastMessage() {
-    firebase
-      .database()
-      .ref('sequelize')
-      .child(room)
-      .child('messages')
-      .limitToLast(1)
-      .get()
-      .then((snapshot) => {
-        const lastMessageObj = snapshot.val()
-        if (lastMessageObj) {
-          console.log('lastmessageobj', Object.values(lastMessageObj)[0])
-          return Object.values(lastMessageObj)[0]
-        } else {
-          return null
-        }
-      })
+    try {
+      firebase
+        .database()
+        .ref('sequelize')
+        .child(room)
+        .child('messages')
+        .limitToLast(1)
+        .get()
+        .then((snapshot) => {
+          const lastMessageObj = snapshot.val()
+          if (lastMessageObj) {
+            console.log(Object.values(lastMessageObj)[0])
+            return Object.values(lastMessageObj)[0]
+          } else {
+            return null
+          }
+        })
+    } catch (error) {
+      console.error(error)
+    }
   }
 
   useEffect(() => {
