@@ -1,12 +1,11 @@
-import React, { useState, useEffect } from "react"
+import React, {  useEffect } from "react"
+import useState from 'react-usestateref'
 import history from "../history"
 import {
 	Editor,
 	EditorState,
 	RichUtils,
 	convertToRaw,
-	convertFromRaw,
-	ContentState,
 	Modifier,
 } from "draft-js"
 import "draft-js/dist/Draft.css"
@@ -56,6 +55,7 @@ const Chat = () => {
   const [editorState, setEditorState] = useState(() =>
     EditorState.createEmpty()
   );
+  const [prevMessage, setPrevMessage, prevMessageRef] = useState({})
 
   const handleKeyCommand = (command, editorState) => {
     const newState = RichUtils.handleKeyCommand(editorState, command);
@@ -132,14 +132,13 @@ const Chat = () => {
   }
 
   function isLastMessageFromSameDate(payload, lastMessage) {
-    console.log('payload', payload, ' lastmessage', lastMessage)
-
     if (!lastMessage) {
       return false
     }
 
     const lastMessageDay = getDay(lastMessage.timestamp)
     const day = getDay(payload.timestamp)
+
 
     if (lastMessageDay === day) {
       return true
@@ -189,13 +188,13 @@ const Chat = () => {
 
   const renderMessage = (payload) => {
     const messages = document.getElementById('messages')
-    const lastMessage = getLastMessage()
+    const lastMessage = prevMessageRef.current
 
     const item = document.createElement("div");
     item.className = 'message'
     item.innerHTML = formatMessage(payload)
 
-    if (isFirstMessage || !isLastMessageFromSameDate(payload, lastMessage)) { //always render the date separator and sender name for first message displayed
+    if (isFirstMessage(messages) || !isLastMessageFromSameDate(payload, lastMessage)) { //always render the date separator and sender name for first message displayed
       renderDateSeparator(payload, messages)
       renderMessageFromNewSender(payload, messages, item)
     }
@@ -206,10 +205,13 @@ const Chat = () => {
 
     else {
       const timestamp = document.createElement('small')
+      timestamp.className = 'message-info'
       timestamp.textContent = getTime(payload.timestamp)
 
-      lastMessage.appendChild(timestamp)
-      lastMessage.appendChild(item)
+      const lastMessageContainer = messages.lastChild
+
+      lastMessageContainer.appendChild(timestamp)
+      lastMessageContainer.appendChild(item)
     }
 
     messages.scrollTo(0, messages.scrollHeight);
@@ -229,34 +231,12 @@ const Chat = () => {
           for (const key in data) {
             const payload = data[key];
             renderMessage(payload)
+            setPrevMessage(payload)
           }
         } else {
           console.log("No data available");
         }
       });
-  }
-
-  function getLastMessage() {
-    try {
-      firebase
-        .database()
-        .ref('sequelize')
-        .child(room)
-        .child('messages')
-        .limitToLast(1)
-        .get()
-        .then((snapshot) => {
-          const lastMessageObj = snapshot.val()
-          if (lastMessageObj) {
-            console.log(Object.values(lastMessageObj)[0])
-            return Object.values(lastMessageObj)[0]
-          } else {
-            return null
-          }
-        })
-    } catch (error) {
-      console.error(error)
-    }
   }
 
   useEffect(() => {
@@ -266,11 +246,12 @@ const Chat = () => {
     room = splitPathName[1].split("-").join(" ");
 
     socket.emit("join", room);
-    //loadLastHundredMessages();
+    loadLastHundredMessages();
   }, []);
 
   socket.on("chat message", function (payload) {
     renderMessage(payload)
+    setPrevMessage(payload) //the incoming message is the previous message when rendering the next message
   });
 
   socket.on("userCount", function (userCount, room) {

@@ -164,7 +164,7 @@ small {
 
 .date-separator-content {
 	background-color: #6a66a3;
-	padding: .3em;
+	padding: .3em .5em .3em .5em;
 	border-radius: 10px;
 	color: white
 }
