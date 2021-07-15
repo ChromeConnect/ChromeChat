@@ -27,6 +27,7 @@ body {
   justify-content: space-evenly;
   align-items: flex-end;
   flex: 1;
+	flex-grow: 1;
   height: 25vh;
 }
 
@@ -59,6 +60,7 @@ body {
   overflow-y: auto;
   position: absolute;
   flex: 1;
+	flex-grow: 1;
   height: 75vh;
   width: 100vw;
 }
@@ -79,7 +81,6 @@ body {
 }
 
 .first-message {
-	margin-left: 2.8rem;
 	margin-bottom: -5px;
 	margin-top: 5px
 }
@@ -175,7 +176,7 @@ div.public-DraftEditor-content {
 
 .message-info > strong {
 	font-size: 16px;
-	margin-left: 1rem;
+	margin-left: .5rem;
 }
 
 small {
