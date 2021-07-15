@@ -100,12 +100,21 @@ ctx = canvas.getContext("2d");
 mouseDown = false;
 socket.emit("join", room);
 
-socket.on("draw", function ({ x, y, colorOption }) {
-  if (colorOption === "white") ctx.lineWidth = 20.0;
-  else ctx.lineWidth = 3.0;
-  ctx.lineTo(x, y);
-  ctx.stroke();
-  ctx.strokeStyle = colorOption;
+let queu = [];
+socket.on("draw", function (payload) {
+  queu.push(payload);
+  while (queu.length) {
+    let currentArray = queu.shift();
+    while (currentArray.length) {
+      let obj = currentArray.shift();
+      if (obj.colorOption === "white") ctx.lineWidth = 20.0;
+      else ctx.lineWidth = 3.0;
+      ctx.lineTo(obj.x, obj.y);
+      ctx.strokeStyle = obj.colorOption;
+    }
+
+    ctx.stroke();
+  }
 });
 
 socket.on("down", function ({ x, y }) {
@@ -132,6 +141,7 @@ window.onmouseup = (e) => {
   }
 };
 
+let arrOfCoordinates = [];
 window.onmousemove = (e) => {
   circularCursorElement.style.left = e.clientX - 20 + "px";
   circularCursorElement.style.top = e.clientY - 20 + "px";
@@ -139,10 +149,21 @@ window.onmousemove = (e) => {
     x = e.clientX;
     y = e.clientY;
     if (mouseDown) {
-      socket.emit("draw", {
-        payload: { x, y, colorOption },
-        room,
-      });
+      arrOfCoordinates.push({ x, y, colorOption });
+      //draw here
+      /*      if (colorOption === "white") ctx.lineWidth = 20.0;
+      else ctx.lineWidth = 3.0;
+      ctx.lineTo(x, y);
+      ctx.strokeStyle = colorOption;
+      ctx.stroke(); */
+    } else {
+      if (arrOfCoordinates.length) {
+        socket.emit("draw", {
+          payload: arrOfCoordinates,
+          room,
+        });
+        arrOfCoordinates = [];
+      }
     }
   }
 };
