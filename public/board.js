@@ -158,11 +158,11 @@ window.onmousemove = (e) => {
     if (mouseDown) {
       arrOfCoordinates.push({ x, y, colorOption });
       //draw here
-      /*      if (colorOption === "white") ctx.lineWidth = 20.0;
+      if (colorOption === "white") ctx.lineWidth = 20.0;
       else ctx.lineWidth = 3.0;
       ctx.lineTo(x, y);
       ctx.strokeStyle = colorOption;
-      ctx.stroke(); */
+      ctx.stroke();
     } else {
       if (arrOfCoordinates.length) {
         socket.emit("draw", {
