@@ -31,4 +31,6 @@ ChromeChat is a realtime chatting website that has the following features:
 
 ## Setup
 
+To run this application, you will first need to clone or download the [Chrome Connect](https://github.com/ChromeConnect/ChromeConnect/) repository. [More setup instructions here!](https://github.com/ChromeConnect/ChromeConnect/blob/main/instruction.md)
+
 Replace firebase config variable with your own api key.
