@@ -13,10 +13,10 @@ export const blockStyles = [
 
 export const styleMap = {
   'CODE': {
-    backgroundColor: '#EEEEEE',
-    fontFamily: 'Consolas,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New',
-    padding: 2,
-    fontSize: '11px'
+    // backgroundColor: '#EEEEEE',
+    // fontFamily: 'Consolas,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New',
+    // padding: 2,
+    // fontSize: '11px'
   },
   'STRIKETHROUGH': {
     textDecoration: 'line-through'
