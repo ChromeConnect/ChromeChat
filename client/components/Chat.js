@@ -105,7 +105,7 @@ const Chat = () => {
     e.preventDefault();
     let splitRoom = room.split(" ").join("-");
     window.open(
-      `https://chromechat.herokuapp.com/board/${splitRoom}`,
+      `https://chromechat.herokuapp.com/board/${socketioRoom}/${splitRoom}`,
       splitRoom,
       "height=700,width=1000,left=100,top=100,resizable=no,scrollbars=yes,toolbar=no,menubar=yes,location=no,directories=no, status=yes"
     );
