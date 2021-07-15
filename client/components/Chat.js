@@ -85,6 +85,7 @@ const Chat = () => {
 
     if (content.hasText()) {
       socket.emit("chat message", { payload, room });
+      console.log('emitted message')
       setEditorState(getResetEditorState(editorState));
       if (!room.includes("Lobby")) {
         firebase
@@ -264,6 +265,7 @@ const Chat = () => {
   }, []);
 
   socket.on("chat message", function (payload) {
+    console.log('chat emssgea')
     renderMessage(payload);
     setPrevMessage(payload); //the incoming message is the previous message when rendering the next message
   });
