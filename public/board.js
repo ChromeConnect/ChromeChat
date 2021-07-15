@@ -102,18 +102,20 @@ socket.emit("join", room);
 
 let queu = [];
 socket.on("draw", function (payload) {
-  queu.push(payload);
+  queu.push(payload); //  que = [ [{x, y, colorOption}, {}] , [] , [] ]
   while (queu.length) {
-    let currentArray = queu.shift();
+    let currentArray = queu.shift(); //first array
+    let firstObjOfCoordinates = currentArray[0];
+    ctx.moveTo(firstObjOfCoordinates.x, firstObjOfCoordinates.y); //move cursor to first x and y coordinates of next drawing
     while (currentArray.length) {
-      let obj = currentArray.shift();
+      let obj = currentArray.shift(); //{x, y, colorOption}
       if (obj.colorOption === "white") ctx.lineWidth = 20.0;
       else ctx.lineWidth = 3.0;
       ctx.lineTo(obj.x, obj.y);
       ctx.strokeStyle = obj.colorOption;
+      ctx.stroke();
     }
-
-    ctx.stroke();
+    //figure out how to disconnect from previous drawing
   }
 });
 
@@ -138,6 +140,11 @@ window.onmousedown = (e) => {
 window.onmouseup = (e) => {
   if (options === "draw") {
     mouseDown = false;
+    //testing
+    ctx.beginPath();
+    ctx.moveTo(x, y);
+    ctx.closePath();
+    //testing
   }
 };
 
