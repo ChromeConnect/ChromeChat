@@ -1,3 +1,5 @@
+const room = window.location.pathname.split("/").pop().split("-").join(" ");
+
 //get url and change tab title to url endpoint
 let socketioRoom = null;
 if (window.location.pathname.includes("Sequelize"))
@@ -5,7 +7,6 @@ if (window.location.pathname.includes("Sequelize"))
 if (window.location.pathname.includes("Express"))
   socketioRoom = "Express: " + room;
 if (window.location.pathname.includes("React")) socketioRoom = "React: " + room;
-const room = window.location.pathname.split("/").pop().split("-").join(" ");
 console.log(room);
 document.title = room;
 let canvas = null;
