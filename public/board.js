@@ -1,4 +1,10 @@
 //get url and change tab title to url endpoint
+let socketioRoom = null;
+if (window.location.pathname.includes("Sequelize"))
+  socketioRoom = "Sequelize: " + room;
+if (window.location.pathname.includes("Express"))
+  socketioRoom = "Express: " + room;
+if (window.location.pathname.includes("React")) socketioRoom = "React: " + room;
 const room = window.location.pathname.split("/").pop().split("-").join(" ");
 console.log(room);
 document.title = room;
@@ -77,7 +83,7 @@ document.addEventListener("keydown", function (e) {
     } else {
       socket.emit("text", {
         payload: { key: e.key, firstClickX, firstClickY },
-        room,
+        socketioRoom,
       });
       firstClickX += ctx.measureText(e.key).width;
     }
@@ -98,7 +104,7 @@ window.onresize = function () {
 ctx = canvas.getContext("2d");
 
 mouseDown = false;
-socket.emit("join", room);
+socket.emit("join", socketioRoom);
 
 let queu = [];
 socket.on("draw", function (payload) {
@@ -132,7 +138,7 @@ socket.on("text", function ({ key, firstClickX, firstClickY }) {
 
 window.onmousedown = (e) => {
   if (options === "draw") {
-    socket.emit("down", { payload: { x, y, colorOption }, room });
+    socket.emit("down", { payload: { x, y, colorOption }, socketioRoom });
     mouseDown = true;
   }
 };
@@ -169,7 +175,7 @@ window.onmousemove = (e) => {
       if (arrOfCoordinates.length) {
         socket.emit("draw", {
           payload: arrOfCoordinates,
-          room,
+          socketioRoom,
         });
         arrOfCoordinates = [];
       }
