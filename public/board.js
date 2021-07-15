@@ -157,12 +157,14 @@ window.onmousemove = (e) => {
     y = e.clientY;
     if (mouseDown) {
       arrOfCoordinates.push({ x, y, colorOption });
-      //draw here
+      //draw here **** bug is happening here
       if (colorOption === "white") ctx.lineWidth = 20.0;
       else ctx.lineWidth = 3.0;
+      ctx.moveTo(x, y);
       ctx.lineTo(x, y);
       ctx.strokeStyle = colorOption;
       ctx.stroke();
+      //
     } else {
       if (arrOfCoordinates.length) {
         socket.emit("draw", {
