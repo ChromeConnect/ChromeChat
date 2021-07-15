@@ -19,6 +19,9 @@ let userName = null;
 const filter = new Filter();
 filter.addWords("Flatiron", "General", "Assembly");
 
+var website = null;
+var socketioRoom = null;
+
 const removeSelectedBlocksStyle = (editorState) => {
   const newContentState = RichUtils.tryToRemoveBlockStyle(editorState);
   if (newContentState) {
@@ -84,12 +87,12 @@ const Chat = () => {
     };
 
     if (content.hasText()) {
-      socket.emit("chat message", { payload, room });
+      socket.emit("chat message", { payload, socketioRoom });
       setEditorState(getResetEditorState(editorState));
       if (!room.includes("Lobby")) {
         firebase
           .database()
-          .ref("sequelize")
+          .ref(website)
           .child(room)
           .child("messages")
           .push()
@@ -228,7 +231,7 @@ const Chat = () => {
   function loadLastHundredMessages() {
     firebase
       .database()
-      .ref("sequelize")
+      .ref(website)
       .child(room)
       .child("messages")
       .limitToLast(100)
@@ -242,7 +245,6 @@ const Chat = () => {
             setPrevMessage(payload);
           }
         } else {
-          console.log("No data available");
         }
       });
   }
@@ -253,13 +255,16 @@ const Chat = () => {
     userName = splitPathName[0].split("/").pop();
     room = splitPathName[1].split("-").join(" ");
     if (pathname.includes("sequelize")) {
-      room = `Sequelize: ${room}`;
+      socketioRoom = `Sequelize: ${room}`;
+      website = "sequelize";
     } else if (pathname.includes("react")) {
-      room = `React: ${room}`;
+      socketioRoom = `React: ${room}`;
+      website = "react";
     } else if (pathname.includes("express")) {
-      room = `Express: ${room}`;
+      socketioRoom = `Express: ${room}`;
+      website = "express";
     }
-    socket.emit("join", room);
+    socket.emit("join", socketioRoom);
     loadLastHundredMessages();
   }, []);
 

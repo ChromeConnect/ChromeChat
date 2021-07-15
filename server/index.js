@@ -23,30 +23,30 @@ io.on("connection", (socket) => {
 });
 
 io.on("connection", (socket) => {
-  socket.on("join", (room) => {
+  socket.on("join", (socketioRoom) => {
     //console.log(`Socket ${socket.id} joining ${room}`);
-    socket.join(room);
-    var userCount = io.sockets.adapter.rooms.get(room).size;
-    io.to(room).emit("userCount", userCount, room);
+    socket.join(socketioRoom);
+    var userCount = io.sockets.adapter.rooms.get(socketioRoom).size;
+    io.to(socketioRoom).emit("userCount", userCount, socketioRoom);
   });
 });
 
 io.on("connection", (socket) => {
   socket.on("chat message", (data) => {
-    const { payload, room } = data;
-    io.to(room).emit("chat message", payload);
+    const { payload, socketioRoom } = data;
+    io.to(socketioRoom).emit("chat message", payload);
   });
   socket.on("draw", (data) => {
-    const { payload, room } = data;
-    io.to(room).emit("draw", payload);
+    const { payload, socketioRoom } = data;
+    io.to(socketioRoom).emit("draw", payload);
   });
   socket.on("down", (data) => {
-    const { payload, room } = data;
-    io.to(room).emit("down", payload);
+    const { payload, socketioRoom } = data;
+    io.to(socketioRoom).emit("down", payload);
   });
   socket.on("text", (data) => {
-    const { payload, room } = data;
-    io.to(room).emit("text", payload);
+    const { payload, socketioRoom } = data;
+    io.to(socketioRoom).emit("text", payload);
   });
 });
 
