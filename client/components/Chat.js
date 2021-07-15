@@ -278,7 +278,7 @@ const Chat = () => {
   });
 
   function handleReturn(event) {
-    if (event.shiftKey) {
+    if (RichUtils.getCurrentBlockType(editorState) === 'unstyled') {
       setEditorState(RichUtils.insertSoftNewline(editorState));
       return "handled";
     }
