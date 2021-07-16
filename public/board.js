@@ -10,6 +10,7 @@ if (window.location.pathname.includes("React")) socketioRoom = "React: " + room;
 console.log(room);
 document.title = room;
 let canvas = null;
+let canvasTwo = null;
 let ctx = null;
 let mouseDown = null;
 let x = null;
@@ -20,6 +21,7 @@ let circularCursorElement = document.getElementById("circularcursor");
 var inMemCanvas = document.createElement("canvas");
 var inMemCtx = inMemCanvas.getContext("2d");
 canvas = document.getElementById("canvas");
+canvasTwo = document.getElementById("canvasTwo");
 const colorsPalette = document.getElementById("colorsPalette");
 //options for rectangle, draw, text, etc.
 let options = null;
@@ -103,6 +105,7 @@ window.onresize = function () {
 };
 
 ctx = canvas.getContext("2d");
+ctxTwo = canvas.getContext("2d");
 
 mouseDown = false;
 socket.emit("join", socketioRoom);
@@ -122,7 +125,6 @@ socket.on("draw", function (payload) {
       ctx.strokeStyle = obj.colorOption;
       ctx.stroke();
     }
-    //figure out how to disconnect from previous drawing
   }
 });
 
@@ -164,13 +166,12 @@ window.onmousemove = (e) => {
     y = e.clientY;
     if (mouseDown) {
       arrOfCoordinates.push({ x, y, colorOption });
-      //draw here **** bug is happening here
-      if (colorOption === "white") ctx.lineWidth = 20.0;
-      else ctx.lineWidth = 3.0;
-      ctx.moveTo(x, y);
-      ctx.lineTo(x, y);
-      ctx.strokeStyle = colorOption;
-      ctx.stroke();
+      //
+      if (colorOption === "white") ctxTwo.lineWidth = 20.0;
+      else ctxTwo.lineWidth = 3.0;
+      ctxTwo.lineTo(x, y);
+      ctxTwo.strokeStyle = colorOption;
+      ctxTwo.stroke();
       //
     } else {
       if (arrOfCoordinates.length) {
