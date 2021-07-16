@@ -244,7 +244,6 @@ const Chat = () => {
             renderMessage(payload);
             setPrevMessage(payload);
           }
-        } else {
         }
       });
   }
