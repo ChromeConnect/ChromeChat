@@ -2,7 +2,7 @@
 
 ## About The Project
 
-!['ChromeChat'](https://github.com/ChromeConnect/ChromeConnect/blob/main/public/ChromeConnect.png?raw=true)
+![image](https://user-images.githubusercontent.com/54007795/126227934-c3ecc04b-19dc-4033-9c4e-1efcf2225561.png)
 
 ChromeChat is a realtime chatting website that has the following features:
 
